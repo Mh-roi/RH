@@ -1,0 +1,26 @@
+  /*
+   * Footer
+   */
+
+  .blog-footer {
+    padding: 1rem 0;
+    ;
+    color: #ffffff;
+    text-align: center;
+    // background-color: #035c25;
+    background: linear-gradient(135deg,
+        #035c25 0%,
+        #ff4626 25%,
+        #fcd116 50%,
+        #035c25,
+        #035c25 100%);
+    font-size: 20px;
+  }
+
+  .blog-footer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .border-right-BF {
+    border-right: 1px solid #8080804d;
+  }

@@ -1,0 +1,15 @@
+:host ::ng-deep .p-menubar {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 1000;
+}
+
+:host ::ng-deep .p-menuitem-root .p-submenu {
+  overflow: visible !important;
+  z-index: 1100;
+}
+
+:host ::ng-deep .p-menubar .p-submenu {
+  left: 100% !important;
+  top: 0 !important;
+}

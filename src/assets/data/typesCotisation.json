@@ -1,0 +1,23 @@
+[
+    {
+      "id" : 1,
+      "code" : "TA01",
+      "libelle": "Type cotisation 1"
+    },
+    {
+        "id" : 2,
+        "code" : "TA02",
+        "libelle": "Type cotisation 2"
+      },
+      {
+        "id" : 3,
+        "code" : "TA03",
+        "libelle": "Type cotisation 3"
+      },
+      {
+        "id" : 4,
+        "code" : "TA04",
+        "libelle": "Type cotisation 4"
+      }
+
+  ]

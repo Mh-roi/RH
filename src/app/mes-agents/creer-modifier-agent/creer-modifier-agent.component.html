@@ -1,0 +1,219 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+<!-- <p-divider></p-divider> -->
+<ng-template
+    pTemplate="header"
+    style="
+        background-color: #1e88e0;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    "
+>
+    <i class="{{ isEditing() ? 'pi-pencil' : 'pi-plus' }} pi p-mr-1 mr-2"></i>
+    <h3 class="mr-auto">
+        {{ agent.id ? "Formulaire de modification" : "Formulaire d'ajout de" }}
+        agent
+    </h3>
+</ng-template>
+<p-progressBar
+    *ngIf="isDialogOpInProgress"
+    mode="indeterminate"
+    color="#1e88e0"
+></p-progressBar>
+<p-message
+    *ngIf="message"
+    [severity]="message.severity"
+    [text]="message.summary"
+></p-message>
+<!-- <p-message severity="info" text="Message Content"></p-message> -->
+<!-- Form -->
+<form
+    (ngSubmit)="create()"
+    #dtf="ngForm"
+    style="
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0px;
+    "
+>
+    <!--   <div class="field col-12 md:col-12">
+        <label for="libelle">Matricule :</label>
+        <input type="text" id="libelle" name="libelle" #libelle="ngModel" [(ngModel)]="matriculeRecherche" 
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <button type="button" (click)="updateAgentDetails()" class="p-button p-button-text">
+                Rechercher
+            </button>
+    </div> -->
+
+    <!-- Champ Matricule + Bouton Rechercher côte à côte -->
+    <!-- Matricule + Rechercher côte à côte -->
+    <div class="field col-12 md:col-12">
+        <label for="libelle">Matricule :</label>
+        <div
+            style="
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: flex-end;
+                gap: 10px;
+            "
+        >
+            <input
+                type="text"
+                id="libelle"
+                name="libelle"
+                [(ngModel)]="matriculeRecherche"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary flex-grow-1"
+                style="flex: 1"
+            />
+            <button
+                type="button"
+                (click)="updateAgentDetails()"
+                class="p-button p-button-info"
+            >
+                Rechercher
+            </button>
+        </div>
+    </div>
+
+    <!-- Champ Nom bien en dessous -->
+    <div class="field col-12 md:col-12" style="margin-top: 1rem">
+        <label for="nom">Nom :</label>
+        <input
+            type="text"
+            id="nom"
+            name="nom"
+            [(ngModel)]="agent.nom"
+            readonly
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+    </div>
+
+    <div class="field col-12 md:col-12">
+        <label for="prenom">Prenom :</label>
+        <input
+            type="text"
+            id="prenom"
+            name="prenom"
+            #section="ngModel"
+            [(ngModel)]="agent.prenom"
+            readonly
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+    </div>
+    <div class="field col-12 md:col-12">
+        <label for="structure"
+            >Structure <span class="text-danger">*</span> :</label
+        >
+        <p-dropdown
+            [options]="structures"
+            [(ngModel)]="agent.structure"
+            optionLabel="libelle"
+            placeholder="Sélectionnez une structure"
+            inputId="structure"
+            name="structure"
+            class="w-full"
+        />
+    </div>
+    <div class="field col-12 md:col-12">
+        <label for="fonction"
+            >Fonction <span class="text-danger">*</span> :</label
+        >
+        <div>
+            <p-dropdown
+                [options]="fonctions"
+                [(ngModel)]="agent.fonction"
+                optionLabel="libelle"
+                placeholder="Sélectionnez une fonction"
+                inputId="fonction"
+                name="fonction"
+                class="w-full"
+            />
+        </div>
+    </div>
+    <div class="field col-12 md:col-12">
+        <label for="emploi">Emploi <span class="text-danger">*</span> :</label>
+        <div>
+            <p-dropdown
+                [options]="emplois"
+                [(ngModel)]="agent.emploi"
+                optionLabel="libelle"
+                placeholder="Sélectionnez un emploi"
+                inputId="emploi"
+                name="emploi"
+                class="w-full"
+            />
+        </div>
+    </div>
+    <div class="field col-12 md:col-12">
+        <label for="emailAddress"
+            >Email <span class="text-danger">*</span> :</label
+        >
+        <input
+            type="text"
+            id="emailAddress"
+            name="emailAddress"
+            #section="ngModel"
+            [(ngModel)]="agent.email"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            pInputText
+        />
+    </div>
+
+    <div class="field col-12 md:col-12">
+        <label for="telephone"
+            >Telephone <span class="text-danger">*</span> :</label
+        >
+        <input
+            type="text"
+            id="telephone"
+            name="telephone"
+            #section="ngModel"
+            [(ngModel)]="agent.telephone"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+    </div>
+
+    <div style="justify-content: center">
+        <div
+            class="col-span-2 text-right"
+            style="
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+            "
+        >
+            <button
+                type="reset"
+                label="Effacer"
+                class="p-button-filter mr-3 float-left"
+                pButton
+                icon="pi pi-trash"
+            ></button>
+
+            <div style="display: flex">
+                <button
+                    label="Annuler"
+                    (click)="clear()"
+                    class="p-button-filter mr-3"
+                    pButton
+                    icon="pi pi-times"
+                ></button>
+                <button
+                    type="submit"
+                    label="Ajouter"
+                    icon="pi {{ isEditing() ? 'pi-save' : 'pi-plus' }}"
+                    class="  {{
+                        isEditing()
+                            ? 'p-button-btn-warning'
+                            : 'p-button-success'
+                    }}"
+                    pButton
+                ></button>
+            </div>
+        </div>
+    </div>
+</form>

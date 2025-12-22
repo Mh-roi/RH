@@ -1,0 +1,82 @@
+<!-- <p-dialog [(visible)]="showDialog" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}"> -->
+    <ng-template pTemplate="header">
+      <i class="pi-pencil pi p-mr-1"></i>
+      <span class="p-mr-auto">
+        <h4>
+          Modifier la note de l'agent "matricule : {{note.fonctionnaire?.matricule}}"
+        </h4>
+      </span>
+    </ng-template>
+
+    <p-divider></p-divider>
+
+    <form [formGroup]="dynamicForm" #dtf="ngForm" (ngSubmit)="save()">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-2">
+            <span class="ui-float-label">
+              <input formControlName="idFonctionnaire" id="float-input" type="hidden" size="30" pInputText>
+            </span>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-4" *ngFor="let critere of critereGroup ;  let i = index">
+              <div [formGroup]="critere">
+                <span class="ui-float-label">
+                  <input formControlName="id" id="float-input" type="hidden" size="30" pInputText>
+                </span>
+                <span class="ui-float-label">
+                  <label class="style-label pb-5" for="float-input">{{listcriteres[i].libelle}} (/{{listcriteres[i].ponderation}} )</label>
+                  <input formControlName="note" id="float-input" type="number"  size="30" required pInputText [min]="0" max={{listcriteres[i].ponderation}}>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3 mx-auto">
+            <div class="field col-sm-6">
+              <label for="tauxActivite">Taux de réalisation des activités :</label>
+              <input type="number" id="tauxActivite" formControlName="tauxActivite" required
+                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="col-sm-6">
+                <label for="annee">Année :</label>
+                <div>
+                    <p-dropdown autoWidth="false" styleClass="mb-3" [style]="{'width':'100%'}" [options]="years"
+                        formControlName="annee" inputId="annee" [required]="true"
+                        placeholder="Selectionner l'année..." [filter]="true" appendTo="body" [showClear]="true">
+                    </p-dropdown>
+                </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-sm-4">
+              <span class="ui-float-label">
+                <label class="style-label" for="float-input" >Observations du supérieur hiérarchique</label>
+                <textarea formControlName="observation" id="float-input" rows="3" pInputTextarea></textarea>
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <span class="ui-float-label">
+                <label class="style-label" for="float-input">Contraintes de réalisation relevées</label>
+                <textarea formControlName="contraintesRealisation" id="float-input" rows="3" required pInputTextarea></textarea>
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <span class="ui-float-label">
+                <label for="float-input" class="style-label">Points de divergence (s’il y a lieu)</label>
+                <textarea formControlName="pointDivergeance" id="float-input" rows="3" pInputTextarea></textarea>
+              </span>
+            </div>
+          </div>
+        </div>
+        <p-divider></p-divider>
+
+        <div class="p-ml-auto text-right">
+          <button type="submit" [disabled]="!dtf.form.valid" label="Enregistrer" value="save" icon="pi pi-plus"
+            class="p-button-raised p-button-text" pButton>
+          </button>
+        </div>
+      </div>
+    </form>
+<!-- </p-dialog> -->

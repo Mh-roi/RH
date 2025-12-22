@@ -1,0 +1,88 @@
+
+<div>
+    <p-card>
+        <!-- <app-panel-header header="Creation d'un compte d'utilisateur" icon="fa fa-2x fa-user-plus"></app-panel-header> -->
+        <div style="max-width: 60vw;margin: auto;">
+            <!-- <p-steps [model]="stepItems" [activeIndex]="activeStep"></p-steps> -->
+            <div class="p-mb-2">
+                <!-- <p-message *ngIf="message" [severity]="message.severity" [text]="message.detail"></p-message> -->
+            </div>
+            <!--Verification Form-->
+            <!--When activate step == 0, this will be shown-->
+            <div>
+                <form  *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && activateCompte()" #f="ngForm" novalidate>
+                    <div class="formgrid grid">
+                        <div class="col-12 md:col-6">
+                            <label for="matricule">Matricule</label>
+                            <input id="matricule" name="matricule" #matricule="ngModel" [(ngModel)]="fonctionnaire.matricule" pInputText required
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                        </div>
+
+                        <!-- <div class="col-12 md:col-6">
+                            <label for="profil">Fonction :</label>
+                            <div>
+                                <p-dropdown autoWidth="false" styleClass="mb-3" [style]="{'width':'100%'}" [options]="profils"
+                                    [(ngModel)]="fonctionnaire.profil" optionLabel="libelle" inputId="profil" name="profil"
+                                    placeholder="Selectionner la fonction..." [filter]="true" appendTo="body" [showClear]="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                    >
+                                </p-dropdown>
+                            </div>
+                        </div> -->
+
+                        <!-- <div  class="field col-12 md:col-6">
+                        <label for="telephone">Telephone</label>
+
+                        <p-inputMask id="telephone" name="telephone" #telephone="ngModel" [(ngModel)]="fonctionnaire.telephone" type="tel" [required]="true"
+                        mask="(+226) 99999999" autoWidth="false"  [style]="{'width':'100%'}" ></p-inputMask>
+                        </div> -->
+
+                        <div class="col-12 md:col-6">
+                            <label for="emailAddress">Email</label>
+                            <input id="emailAddress" type="email" name="emailAddress" #emailAddress="ngModel" [(ngModel)]="fonctionnaire.emailAddress" pInputText required class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <label for="password">Nouveau mot de passe</label>
+                            <input id="password" type="password" name="password" #password="ngModel" [(ngModel)]="fonctionnaire.password" pInputText class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                required />
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <label for="pwd-confirmation">Confirmation du Mot de Passe</label>
+                            <!-- <p-password id="pwd-confirmation" name="pwd-confirmation" #confirmation="ngModel"
+                                [(ngModel)]="pwdConfirmation" toggleMask="true" feedback="false" required>
+                            </p-password> -->
+                            <input id="pwd-confirmation" type="password" name="pwd-confirmation" #confirmation="ngModel"
+                                [(ngModel)]="pwdConfirmation" toggleMask="true" feedback="false" required class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                          
+                            <div class="p-error"
+                                *ngIf="confirmation.invalid && (confirmation.dirty || confirmation.touched) ">
+                                <span>Veillez renseigner la confirmation du mot de passe</span>
+                            </div>
+                            <div class="p-error"
+                                *ngIf="(confirmation.dirty || confirmation.touched) && fonctionnaire.password !== pwdConfirmation">
+                                <span>Les mots de passe ne sont pas les mêmes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p-divider></p-divider>
+
+                    <div class="text-right">
+                        <button id="bt" type="submit" class="btn btn-lg btn-success mr-2">Activation</button>
+                        <button type="reset" pButton label="Effacer" icon="pi pi-times-circle"
+                            class="p-button-raised p-button-text p-button-secondary">
+                        </button>
+                        <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isSuccessFailed">
+                            Échec d'activation du compte: {{ errorMessage }}
+                        </div>
+                    </div>
+                </form>
+
+                <div class="alert alert-success" *ngIf="isSuccessful">
+                    Veuillez consulter votre boite mail pour poursuivre!
+                </div>
+            </div>
+        </div>
+    </p-card>
+</div>

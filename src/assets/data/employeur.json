@@ -1,0 +1,4 @@
+[
+    {"id":1, "sigle":"IBTECH", "numeroAffiliation":"AFF002","raisonSociale":"kk","rccm":"7777", "ifu":"444","typeEmployeur":{"id":1, "libelle":"ONG"}},
+    {"id":2,"sigle":"TECH", "numeroAffiliation":"AFF002","raisonSociale":"ll","rccm":"7777", "ifu":"444","typeEmployeur":{"id":1, "libelle":"Association"}}
+    ]

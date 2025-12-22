@@ -1,0 +1,33 @@
+[
+    {
+      "id" : 1,
+      "code" : "EMP1",
+      "libelle": "Emploi 1"
+      
+    },
+    {
+        "id" : 2,
+        "code" : "EMP2",
+        "libelle": "Emploi 2"
+        
+    },
+    {
+        "id" : 3,
+        "code" : "EMP3",
+        "libelle": "Emploi 3"
+       
+    },
+    {
+      "id" : 4,
+      "code" : "EMP4",
+      "libelle": "Emploi 4"
+     
+  },
+  {
+    "id" : 5,
+    "code" : "EMP5",
+    "libelle": "Emploi 5"
+   
+}
+
+  ]

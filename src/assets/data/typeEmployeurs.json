@@ -1,0 +1,20 @@
+[
+    {
+      "id" : 1,
+      "code" : "0001",
+      "libelle": "Association"
+
+    },
+    {
+        "id" : 2,
+        "code" : "0002",
+        "libelle": "ONG"
+
+    },
+    {
+        "id" : 2,
+        "code" : "0002",
+        "libelle": "Etablissement public"
+
+    }
+  ]

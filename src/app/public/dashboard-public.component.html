@@ -1,0 +1,38 @@
+<div class="tbrh-header">
+    <div class="national-emblem">
+        <img src="assets/img/armoirie_BF.png" alt="Armoiries du Burkina Faso" />
+    </div>
+
+    <div class="header-title">
+        <h1>TBRH</h1>
+        <p class="tagline">Tableau de Bord des Ressources Humaines</p>
+        <p class="subtagline">
+            Pilotage stratégique et suivi des effectifs de l’État
+        </p>
+        <p class="institution">
+            Ministère de la Fonction Publique, du Travail et de la Protection Sociale
+        </p>
+    </div>
+
+    <div class="national-flag">
+        <img src="assets/img/flag.png" alt="Drapeau du Burkina Faso" />
+    </div>
+</div>
+
+<div class="relative overflow-hidden flex flex-column justify-content-center">
+    <div class="bg-circle opacity-50" style="top: -200px; left: -700px"></div>
+    <div
+        class="bg-circle hidden lg:flex"
+        style="top: 50px; right: -800px; transform: rotate(60deg)"
+    ></div>
+
+    <div class="main-content-wrapper">
+
+        <app-public-menu></app-public-menu>
+
+<div class="mx-0 lg:mx-12 lg:px-12 z-2 main-router-container">
+            <router-outlet></router-outlet>
+            <app-public-footer></app-public-footer>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+<!-- <p-divider></p-divider> -->
+<ng-template pTemplate="header" style="
+    background-color:#1e88e0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;">
+    <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1 mr-2"></i>
+    <h3 class="mr-auto">
+        {{periode.id ? 'Formulaire de modification' : 'Formulaire d\'ajout de'}} periode
+    </h3>
+</ng-template>
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+<!-- <p-message severity="info" text="Message Content"></p-message> -->
+<!-- Form -->
+
+<form (ngSubmit)="saveEntity()" #dtf="ngForm">
+   
+    <div class="row">
+        <div class="p-field p-fluid p-col-12 col-md-6">
+            <label for="dateDebut">Date Debut</label>
+            <p-calendar dateFormat="dd/mm/yy" id="dateDebut" name="dateDebut" #dateDebut="ngModel"
+                [(ngModel)]="periode.dateDebut" [showIcon]="true" inputId="icon"></p-calendar>
+        </div>
+        <div class="p-field p-fluid p-col-12 col-md-6">
+            <label for="dateFin">Date Fin</label>
+    
+            <p-calendar id="dateFin" name="dateFin" #dateFin="ngModel" [(ngModel)]="periode.dateFin" [showIcon]="true"
+                inputId="icon"></p-calendar>
+    
+    
+        </div>
+    
+        <div class="p-field p-fluid p-col-12 col-md-6">
+            <label for="periodType">Type Periode ("NOTE" ou "ACTIVITE")</label>
+            <input id="periodType" name="periodType" #periodType="ngModel" [(ngModel)]="periode.periodType" pInputText
+                required />
+        </div>
+    
+        <div class="p-field p-fluid p-col-12 col-md-6">
+            <label for="ministereInstitution">Ministere</label>
+            <p-dropdown id="ministereInstitution" name="ministereInstitution" #ministereInstitution="ngModel"
+                [(ngModel)]="periode.ministereInstitution" [options]="ministeres" placeholder="Selectionner un Ministere"
+                optionLabel="libelle" [showClear]="true"></p-dropdown>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+   
+   
+   
+
+    <!--<p-divider></p-divider>-->
+    <div class="p-ml-auto text-right ">
+        <div class="p-ml-auto text-right">
+            <button type="reset" label="Effacer" class="p-button-filter mr-3 float-left" pButton
+                icon="pi pi-trash"></button>
+            <button label="Annuler" (click)="clear()" class="p-button-filter mr-3" pButton icon="pi pi-times"></button>
+            <button type="submit" [disabled]="!dtf.form.valid" label="{{isEditing() ? 'Enregistrer' : 'Ajouter'}}"
+                icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+                class="  {{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+            </button>
+        </div>
+    </div>
+</form>

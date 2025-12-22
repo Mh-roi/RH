@@ -1,0 +1,278 @@
+<div class="card">
+    <div class="card-header bg-header-cnamu">
+        <h4 class="text-white text-center text-bold">Mon compte</h4>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="offset-lg-1 col-lg-10 col-sm-12">
+                <!-- <div *ngIf="!user?.stillConnected" class="alert alert-danger text-bold text-center">
+                    Veuillez modifier votre mot de passe pour poursuivre votre activité!
+                </div> -->
+
+                <div *ngIf="!isChangeInfoPerso" class="row">
+                    <div class="col-sm-12 col-md-2 photo-profile">
+                        <br/><br/>
+                    </div>
+
+                    <div class="info-profil col-sm-12 col-md-12">
+                        <h6 class="section-title text-center">Informations Personnelles</h6>
+                        <div *ngIf="user" class="table-responsive">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <td>: {{ user.nom }}</td>
+                                    <th scope="col">Prenom</th>
+                                    <td>: {{ user.prenom }}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th scope="col">Matricule</th>
+                                    <td>: {{ user.login }}</td>
+                                    <th scope="col">Emploi</th>
+                                    <td>: {{ user.emploi ? user.emploi!.libelleEmploi:'-' }}</td>
+                                </tr> -->
+                                <tr>
+                                    <th scope="col">Téléphone</th>
+                                    <td>: {{ user.telephone }}</td>
+                                    <th scope="col">Email</th>
+                                    <td>: {{ user.email }}</td>
+                                </tr>
+                                <app-actions-toolbar-iud 
+                                   (edit)="openModalEdit(user)" [enableBtnEdit]="enableBtnEdit"
+                                > 
+                              </app-actions-toolbar-iud>                                <tr>
+                                </tr>
+                                <!-- <tr *ngFor="let profils of user.profile?.privilegeCollection!">
+                                    <th scope="col">Profil</th>
+                                    <td>: <span class="badge badge-warning"> {{profils.libelle}}</span></td>
+                                    
+                                </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div  class="row mt-5">
+                    <div class="modification-email col-12">
+                        <h6 class="section-title text-center">Modification de votre email</h6>
+                        <hr/>
+                        <form #mailForm="ngForm" aria-label="Modification Email" name="form" novalidate role="form">
+                            <div class="row">
+                                <div class="form-group col-12" custom-required>
+                                    <div class="text-center">
+                                        <label class="form-control-label">Veuillez entrer votre nouvelle adresse
+                                            email</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <div class="btn btn-sm">
+                                                <fa-icon [icon]="faEnvelope"></fa-icon>
+                                            </div>
+                                        </div>
+                                        <input [(ngModel)]="newMail" class="form-control form-control-sm" name="newmail"
+                                               pattern="[^@]+@[^\.]+\..+"
+                                               placeholder="Saisir votre nouvelle adresse email"
+                                               required type="email"/>
+                                    </div>
+
+                                    <div *ngIf="mailForm.controls['newmail']?.invalid && (
+                                    mailForm.controls['newmail']?.dirty || mailForm.controls['newmail']?.touched)">
+                                        <small *ngIf="mailForm.controls['newmail']?.errors?.['required']"
+                                               class="form-text text-danger"> Champ
+                                            obligatoire. </small>
+                                        <small *ngIf="mailForm.controls['newmail']?.errors?.['pattern']"
+                                               class="form-text text-danger">
+                                            Ce champ ne peut contenir qu'une adresse Email!
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <button (click)="changeMail()" [disabled]="mailForm.form.invalid"
+                                            class="btn btn-sm btn-success"
+                                            type="button">
+                                         <fa-icon [icon]="faSave"></fa-icon> 
+                                        <span class="ml-2">Modifier mon adresse email</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> -->
+
+                <div class="row mt-5">
+                    <div class="modification-password col-12">
+                        <h6 class="section-title text-center">Modification de votre mot de passe</h6>
+                        <hr/>
+                        <form #passwordForm="ngForm" aria-label="Modification de mot de passe" name="form" novalidate
+                              role="form">
+                            <div class="row">
+                                <div class="form-group col-12" custom-required>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <div class="btn btn-sm">
+                                                <!-- <fa-icon [icon]="faLock"></fa-icon> -->
+                                            </div>
+                                        </div>
+                                        <input #oldPassword (keyup.enter)="changePassword()"
+                                               [(ngModel)]="changePasswordDTO.oldPassword" 
+                                               class="form-control form-control-sm" id="oldPassword"
+                                               name="oldPassword" placeholder="Mot de passe actuel"
+                                               [type]="isTypePassword ? 'password' : 'text'" required/>
+                                        <div (click)="togglePassword()" class="input-group-append hand">
+                                            <div class="input-group-text">
+                                                <span
+                                                    [ngClass]="{'fa-eye-slash': !isTypePassword, 'fa-eye': isTypePassword}"
+                                                    class="fas"
+                                                    style="padding-right: 10px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div *ngIf="passwordForm.controls['oldPassword']?.invalid && (
+                                    passwordForm.controls['oldPassword']?.dirty ||
+                                    passwordForm.controls['oldPassword']?.touched)">
+                                        <small *ngIf="passwordForm.controls['oldPassword']?.errors?.['required']"
+                                               class="form-text text-danger">
+                                            Mot de passe obligatoire
+                                        </small>
+
+                                        <small *ngIf="passwordForm.controls['oldPassword']?.errors?.['minlength']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe doit respecter une certaine forme
+                                        </small>
+
+                                        <small *ngIf="passwordForm.controls['oldPassword']?.errors?.['maxlength']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe ne doit pas dépasser un certain nombre de caractère
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-12" custom-required>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <div class="btn btn-sm">
+                                                <!-- <fa-icon [icon]="faLock"></fa-icon> -->
+                                            </div>
+                                        </div>
+                                        <input #newpassword [(ngModel)]="newPassword"
+                                               class="form-control form-control-sm" id="newPassword" name="newPassword"
+                                               pattern="^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,20})$"
+                                               [type]="isTypePassword ? 'password' : 'text'"
+                                               placeholder="Nouveau mot de passe" required/>
+                                        <div (click)="togglePassword()" class="input-group-append hand">
+                                            <div class="input-group-text">
+                                                <span
+                                                    [ngClass]="{'fa-eye-slash': !isTypePassword, 'fa-eye': isTypePassword}"
+                                                    class="fas"
+                                                    style="padding-right: 10px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div *ngIf="passwordForm.controls['newPassword']?.invalid && (
+                                    passwordForm.controls['newPassword']?.dirty ||
+                                     passwordForm.controls['newPassword']?.touched)">
+                                        <small *ngIf="passwordForm.controls['newPassword']?.errors?.['required']"
+                                               class="form-text text-danger">
+                                            Mot de passe obligatoire
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['newPassword']?.errors?.['minlength']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe doit respecter une certaine forme
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['newPassword']?.errors?.['maxlength']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe ne doit pas dépasser un certain nombre de caractère
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['newPassword']?.errors?.['pattern']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe doit contenir au moins une majuscule, une minuscule, un
+                                            chiffre et au moins 8 caractères
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pl-4 mb-2">
+                                <app-password-strength [passwordToCheck]="newPassword!" (passwordStrength)="onPasswordStrengthChanged($event)"></app-password-strength>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-12" custom-required>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <div class="btn btn-sm">
+                                                <!-- <fa-icon [icon]="faLock"></fa-icon> -->
+                                            </div>
+                                        </div>
+                                        <input #confirmpassword="ngModel" (keyup)="checkIdentiquePassword()"
+                                               [(ngModel)]="confirmPassword" class="form-control form-control-sm"
+                                               id="confirmPassword" name="confirmPassword"
+                                               pattern="^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,20})$"
+                                               [type]="isTypePassword ? 'password' : 'text'"
+                                               placeholder="Confirmation Mot de passe" required/>
+                                        <div (click)="togglePassword()" class="input-group-append hand">
+                                            <div class="input-group-text">
+                                                <span
+                                                    [ngClass]="{'fa-eye-slash': !isTypePassword, 'fa-eye': isTypePassword}"
+                                                    class="fas"
+                                                    style="padding-right: 10px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div *ngIf=" passwordForm.controls['confirmPassword']?.invalid && (
+                                    passwordForm.controls['confirmPassword']?.dirty ||
+                                    passwordForm.controls['confirmPassword']?.touched)">
+                                        <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['required']"
+                                               class="form-text text-danger">
+                                            Confirmation de Mot de passe obligatoire
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['minlength']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe doit respecter une certaine forme
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['maxlength']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe ne doit pas dépasser un certain nombre de caractère
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['pattern']"
+                                               class="form-text text-danger">
+                                            Votre mot de passe doit contenir au moins une majuscule, une minuscule, un
+                                            chiffre et au moins 8 caractères
+                                        </small>
+                                        <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['nomatch']"
+                                               class="form-text text-danger">
+                                            La comfirmation n'est pas identique au nouveau mot de passe
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <button (click)="changePassword()" [disabled]="passwordForm.form.invalid"
+                                            class="btn btn-sm btn-success" type="button">
+                                        <!-- <fa-icon [icon]="faSave"></fa-icon> -->
+                                        <span class="ml-2"> Modifier mon mot de passe </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

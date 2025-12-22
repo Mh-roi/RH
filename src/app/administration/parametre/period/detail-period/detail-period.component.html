@@ -1,0 +1,26 @@
+<!-- formulaire d'affichage du détail -->
+<ng-template pTemplate="header">
+    <span class="p-mr-auto"> <b>DETAILS PERIODE</b></span>
+  </ng-template>
+  <!-- <p-divider></p-divider> -->
+  <hr>
+  <div class="row">
+    <div class="col-md-12 details-item">
+      <span class="va-m"><span class="font-bold">DateDebut</span> {{periode.dateDebut}}</span>
+    </div>
+    <div class="col-md-12 details-item">
+        <span class="va-m"><span class="font-bold">DateFin</span> {{periode.dateFin}}</span>
+      </div>
+      <div class="col-md-12 details-item">
+        <span class="va-m"><span class="font-bold">PeriodType</span> {{periode.periodType}}</span>
+      </div>
+    <div class="col-md-12 details-item">
+      <span class="va-m"><span class="font-bold">Ministere:</span> {{periode.ministereInstitution? periode.ministereInstitution!.libelle:'-'}}</span>
+    </div>
+  
+  </div>
+  <!-- <p-divider></p-divider> -->
+  <div class="p-ml-auto text-right">
+    <button description="reset" icon="pi pi-times" label="Fermer" (click)="clear()" class="p-button-filter mr-2"
+      pButton></button>
+  </div>

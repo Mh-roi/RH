@@ -1,0 +1,113 @@
+<div class="grid">
+    <!-- Détails du pointage -->
+    <div class="col-12 md:col-12">
+        <p-card>
+            <div class="pointage-details">
+                <div class="grid">
+                    <div class="col-12 md:col-4 detail-label">Date:</div>
+                    <div class="col-12 md:col-8 detail-value">
+                        {{ selectedPointage.dateControle | date : "fullDate" }}
+                    </div>
+
+                    <div class="col-12 md:col-4 detail-label">Heure:</div>
+                    <div class="col-12 md:col-8 detail-value">
+                        {{ selectedPointage.heureControle }}
+                    </div>
+
+                    <div class="col-12 md:col-4 detail-label">Agent:</div>
+                    <div class="col-12 md:col-8 detail-value">
+                        {{ getAgentName(selectedPointage.agentDTO!) }}
+                    </div>
+
+                    <div class="col-12 md:col-4 detail-label">Statut:</div>
+                    <div class="col-12 md:col-8 detail-value">
+                        <span
+                            [class]="
+                                'status-badge status-' +
+                                selectedPointage.statutControle
+                            "
+                        >
+                            {{
+                                getStatusLabel(selectedPointage.statutControle)
+                            }}
+                        </span>
+                    </div>
+
+                    <div class="col-12 md:col-4 detail-label">Lieu:</div>
+                    <div class="col-12 md:col-8 detail-value">
+                        {{ selectedPointage.lieuControle || "Non spécifié" }}
+                    </div>
+
+                    <div
+                        *ngIf="
+                            selectedPointage.statutControle ===
+                                'ABSENT_JUSTIFIE' ||
+                            selectedPointage.statutControle === 'ABSENT'
+                        "
+                        class="col-12"
+                    >
+                        <p-divider></p-divider>
+                        <div class="grid">
+                            <div class="col-12 md:col-4 detail-label">
+                                nombre d'heure d'absence :
+                            </div>
+                            <div class="col-12 md:col-8 detail-value">
+                                {{ selectedPointage.dureeAbsenceH || 0 }}
+                            </div>
+                            <div class="col-12 md:col-4 detail-label">
+                                jour d'absence :
+                            </div>
+                            <div class="col-12 md:col-8 detail-value">
+                                {{ selectedPointage.dureeAbsenceJ || 0 }}
+                            </div>
+                            <div class="col-12 md:col-4 detail-label">
+                                Justification:
+                            </div>
+                            <div class="col-12 md:col-8 detail-value">
+                                {{
+                                    selectedPointage.justification ||
+                                        "Aucune justification"
+                                }}
+                            </div>
+
+                            <div class="col-12 md:col-4 detail-label">
+                                Référence pièce:
+                            </div>
+                            <div class="col-12 md:col-8 detail-value">
+                                {{
+                                    selectedPointage.referencePJ ||
+                                        "Aucune référence"
+                                }}
+                            </div>
+                            <button
+                                pButton
+                                type="button"
+                                icon="pi pi-download"
+                                label="Télécharger la pièce justificative"
+                                class="p-button-sm p-button-secondary"
+                                (click)="
+                                    selectedPointage.pieceJustificative &&
+                                        downloadFile(
+                                            selectedPointage.pieceJustificative
+                                        )
+                                "
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+
+                <p-divider></p-divider>
+
+                <div class="flex justify-content-end">
+                    <button
+                        pButton
+                        icon="pi pi-arrow"
+                        label="Retour"
+                        (click)="clear()"
+                        class="p-button-sm p-button-outlined mr-2"
+                    ></button>
+                </div>
+            </div>
+        </p-card>
+    </div>
+</div>

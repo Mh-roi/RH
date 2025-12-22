@@ -1,0 +1,26 @@
+[
+    {
+      "id" : 1,
+      "code" : "0001",
+      "libelle": "SA"
+
+    },
+    {
+        "id" : 2,
+        "code" : "0002",
+        "libelle": "SARL"
+
+    },
+    {
+        "id" : 3,
+        "code" : "0003",
+        "libelle": "SNC"
+
+    },
+    {
+        "id" : 4,
+        "code" : "0003",
+        "libelle": "SAS"
+
+    }
+  ]

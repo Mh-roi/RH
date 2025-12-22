@@ -1,0 +1,26 @@
+<p-card header="Mon code d'affiliation" [style]="{width: 'default',  height:'default', background:'#FFFFFF'}" styleClass="p-card-shadow" class="content-center">
+    <div class="p-error" *ngIf="!saveSuccess">{{message}}</div>
+  
+    <!-- Button for code generation -->
+    <div class="grid w-20 content-center" >
+        <div class="col-12 md:col-6 xl:col-6 ">
+        <p-button label="Générer mon code d'affiliation" *ngIf="fonctionnaire" icon="pi pi-key" (click)="openGenererCodeDialog()"></p-button>
+    </div>
+        <!-- Customize "Afficher mon code d'affiliation" button with an icon -->
+        <!-- <p-button label="Afficher mon code d'affiliation" *ngIf="fonctionnaire" icon="pi pi-info-circle" (click)="afficherMonCode()"></p-button> -->
+        <div class="col-12 md:col-6 xl:col-6">
+        <!-- Customize "Changer mon supérieur hiérarchique" button with an icon -->
+        <p-button label="Afficher mon code" *ngIf="fonctionnaire" icon="fas fa-eye" (click)="openAfficherCodeDialog()"></p-button>
+    </div>
+        <!-- Button for superior hierarchique change -->
+        <!-- Add additional buttons here if needed -->
+    </div>
+
+    <!-- Display generated code or message -->
+    <div class="p-field" *ngIf="code">
+        <label for="codeGenere"><h1 style="color: black; font-weight: bolder;">{{fonctionnaire.codeGenere}}</h1></label>
+    </div>
+    <div class="p-field" *ngIf="!code">
+        <div class="p-info" style="color: forestgreen;"><h3>{{message}}</h3></div>
+    </div>
+</p-card>

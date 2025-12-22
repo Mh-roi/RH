@@ -1,0 +1,168 @@
+<app-confirmation></app-confirmation>
+<!-- <p-divider></p-divider> -->
+<!-- <hr> -->
+<ng-template pTemplate="header">
+    <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1"></i>
+    <span class="mr-auto">
+        {{user.id ? 'Modifier' : 'Ajouter'}} un utilisateur
+    </span>
+</ng-template>
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="dialogErrorMessage" severity="error" [text]="dialogErrorMessage"></p-message>
+<form (ngSubmit)="saveEntity()" #dtf="ngForm" style="margin-top:20px;">
+    <fieldset class="border p-3">
+        <legend class="w-auto text-bold text-bolt">
+            Informations utilisateur
+        </legend>
+        <div class="formgrid grid">
+            <div class="field col-6 md:col-6">
+                <label for="nom">Nom<span class="text-danger">*</span>:</label>
+                <input type="text" id="nom" name="nom" placeholder="" #nom="ngModel" [(ngModel)]="user.nom" required
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="field col-6 md:col-6">
+                <label for="prenom">Prenom<span class="text-danger">*</span>:</label>
+                <input type="text" id="prenom" name="prenom" placeholder="" #prenom="ngModel" [(ngModel)]="user.prenom"
+                    required
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+
+            </div>
+            <div class="field col-6 md:col-6">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <input id="email" type="text" name="email" #email="ngModel" placeholder="" [(ngModel)]="user.email"
+                    pInputText required
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+
+            </div>
+            <div class="field col-6 md:col-6">
+                <label for="telephone">Telephone<span class="text-danger">*</span></label>
+                <p-inputMask id="telephone" name="telephone" #telephone="ngModel" [(ngModel)]="user.telephone" type="tel" [required]="true"
+                mask="(+226) 99999999" autoWidth="false"  [style]="{'width':'100%'}" ></p-inputMask>
+                <!-- <input id="telephone" type="text" name="telephone" placeholder="" #telephone="ngModel"
+                    [(ngModel)]="user.telephone" pInputText required
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"> -->
+
+            </div>
+            <div class="field col-6 md:col-6">
+                <label for="nomUtilisateur">Nom utilisateur <span class="text-danger">*</span></label>
+                <input id="nomUtilisateur" type="text" placeholder="" name="nomUtilisateur" #nomUtilisateur="ngModel"
+                    [(ngModel)]="user.nomUtilisateur" pInputText required
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <!-- <div class="field col-6 md:col-6">
+                <label for="dateNaissance">Date de naissance<span class="text-danger">*</span></label>
+                <p-calendar [(ngModel)]="user.dateNaissance" [showIcon]="true"></p-calendar>
+            </div> -->
+            <div class="field col-6 md:col-6">
+                <label for="profile">Profil :</label>
+                <p-dropdown autoWidth="false" styleClass="mb-3" [style]="{'width':'100%', height: '40px'}"
+                    [options]="profils" [(ngModel)]="user.profile" optionLabel="libelle" inputId="profile"
+                    name="profile" placeholder="Selectionner le profil ..." [filter]="true" appendTo="body"
+                    [showClear]="true">
+                </p-dropdown>
+            </div>
+
+             <!-- <div class="p-field p-fluid col-6 md:col-6">
+                <label for="password">Mot de passe<span class="text-danger">*</span></label>
+                <p-password [feedback]="true" type="text" name="password" #password="ngModel"
+                    [(ngModel)]="user.password" [toggleMask]="true"></p-password>
+                <div class="p-error" *ngIf="password.invalid && (password.dirty || password.touched) ">
+                    <span>Veillez renseigner votre mot de passe</span>
+                </div>
+                <div class="p-error" *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <span>Le mot de passe doit etre d'au moins 6 caracteres</span>
+                </div>
+            </div>
+            <div class="p-field p-fluid col-6 md:col-6">
+                <label for="password">Confirmation<span class="text-danger">*</span></label>
+                <p-password id="confirmePassword" name="confirmePassword" #confirmePassword="ngModel"
+                    [(ngModel)]="user.confirmePassword" [toggleMask]="true" [feedback]="false"  required>
+                </p-password>
+                <div class="p-error"
+                    *ngIf="confirmePassword.invalid && (confirmePassword.dirty || confirmePassword.touched)">
+                    <span>Veillez renseigner la confirmation du mot de passe</span>
+                </div>
+                <div class="p-error" *ngIf="(confirmePassword.dirty || confirmePassword.touched) && user.password !== user.confirmePassword">
+                    <span>Les mots de passe ne sont pas les memes</span>
+                </div>
+            </div>  -->
+            <!-- <div class="field col-6 md:col-6">
+                <label for="photo">Photo<span class="text-danger">*</span></label>
+                <input type="file" pInputText accept="image/*" (change)="onFileChange($event)"  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+                <p-avatar  [image]="imageToShow!" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+            </div> -->
+
+        </div>    
+    </fieldset>
+     <p-divider class="mt-10"></p-divider>
+    <div class="p-ml-auto text-right">
+        <button type="reset" label="Annuler" icon="pi pi-times" (click)="clear()"
+            class="p-button-raised p-button-danger p-button-success mr-3" pButton></button>
+        <button type="submit" [disabled]="!dtf.form.valid" label="{{isEditing() ? 'Enregistrer' : 'Ajouter'}}"
+            icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+            class="p-button-raised  {{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+        </button>
+    </div>
+</form>
+
+<!-- <form [formGroup]="myForm" >
+
+     
+
+    <div class="form-group">
+
+        <label for="name">Name</label>
+
+        <input 
+
+            formControlName="name"
+
+            id="name" 
+
+            type="text" 
+
+            class="form-control">
+
+        <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+
+            
+        </div>
+
+    </div>
+
+    
+
+    <div class="form-group">
+
+        <label for="file">File</label>
+        
+       
+        <input 
+
+            formControlName="file"
+
+            id="file" 
+
+            type="file" 
+
+            class="form-control"
+
+            (change)="onFileChange($event)">
+
+        <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+
+           
+
+        </div>
+
+    </div>
+
+    
+
+     <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; width:500px"> 
+
+    <p-avatar  [image]="imageSrc" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+
+</form> -->

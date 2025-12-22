@@ -1,0 +1,26 @@
+[
+    {
+      "id" : 1,
+      "code" : "0001",
+      "libelle": "célibataire"
+
+    },
+    {
+        "id" : 2,
+        "code" : "0002",
+        "libelle": "mariée"
+
+    },
+    {
+        "id" : 3,
+        "code" : "0003",
+        "libelle": "veuve"
+
+    },
+    {
+        "id" : 4,
+        "code" : "0003",
+        "libelle": "divorcée"
+
+    }
+  ]

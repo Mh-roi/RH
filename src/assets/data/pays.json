@@ -1,0 +1,17 @@
+[
+    {
+      "id" : 1,
+      "code" : "01",
+      "libelle": "BURKINA FASO 1"
+    },
+    {
+        "id" : 2,
+        "code" : "02",
+        "libelle": "MALI"
+      },
+      {
+        "id" : 3,
+        "code" : "03",
+        "libelle": "TOGO"
+      }
+  ]

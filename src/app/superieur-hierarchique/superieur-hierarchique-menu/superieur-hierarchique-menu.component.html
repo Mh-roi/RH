@@ -1,0 +1,313 @@
+<p-menubar class="link-secondary" [model]="items" [autoDisplay]="false">
+    <ng-template pTemplate="end">
+        <div *ngIf="isLoggedIn">
+            <p-splitButton
+                label="{{ matricule }}"
+                icon="pi pi-user"
+                [model]="sousItems"
+                [ngStyle]="{
+                    'background-color': '#8f1313',
+                    'margin-right': '20px',
+                    'border-radius': '8px'
+                }"
+            >
+            </p-splitButton>
+        </div>
+        <div *ngIf="!isLoggedIn">
+            <button
+                pButton
+                type="button"
+                icon="pi pi-sign-in"
+                class="p-button-secondary p-button-raised p-button-text p-button-rounded p-mr-3"
+                style="
+                    background-color: #f8f9fa;
+                    color: #756254;
+                    border-radius: 4px;
+                "
+                pTooltip="Se connecter"
+                tooltipPosition="bottom"
+                (click)="(null)"
+            ></button>
+            <button
+                pButton
+                type="button"
+                icon="pi pi-user-plus"
+                class="p-button-secondary p-button-raised p-button-text p-button-rounded p-mr-3"
+                style="
+                    background-color: #f8f9fa;
+                    color: #756254;
+                    border-radius: 4px;
+                "
+                pTooltip="Créer Un Compte"
+                tooltipPosition="bottom"
+                routerLink="/register"
+            ></button>
+        </div>
+    </ng-template>
+</p-menubar>
+
+<!-- Dialog-->
+<p-dialog
+    *ngIf="changePasswordVo"
+    [(visible)]="showDialog"
+    [modal]="true"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+    [style]="{ width: '50vw' }"
+>
+    <ng-template pTemplate="header">
+        <i class="pi-pencil pi p-mr-1"></i>
+        <span class="p-mr-auto">Modifier mon compte</span>
+    </ng-template>
+    <p-progressBar
+        *ngIf="isDialogOpInProgress"
+        mode="indeterminate"
+    ></p-progressBar>
+    <p-message
+        *ngIf="dialogErrorMessage"
+        severity="error"
+        [text]="dialogErrorMessage"
+    ></p-message>
+    <p-divider></p-divider>
+    <form (ngSubmit)="editCompteFonctionnaire()" #dtf="ngForm">
+        <div class="p-fluid p-grid">
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="currentPassword">Ancien mot de passe</label>
+                <input
+                    id="currentPassword"
+                    type="password"
+                    name="currentPassword"
+                    #currentPassword="ngModel"
+                    [(ngModel)]="changePasswordVo.currentPassword"
+                    pInputText
+                    required
+                />
+            </div>
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="newPassword">Nouveau mot de passe</label>
+                <input
+                    id="newPassword"
+                    type="password"
+                    name="newPassword"
+                    #newPassword="ngModel"
+                    [(ngModel)]="changePasswordVo.newPassword"
+                    pInputText
+                    required
+                />
+            </div>
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="pwd-confirmation"
+                    >Confirmation du Mot de Passe</label
+                >
+                <p-password
+                    id="pwd-confirmation"
+                    name="pwd-confirmation"
+                    #confirmation="ngModel"
+                    [(ngModel)]="pwdConfirmation"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    required
+                >
+                </p-password>
+                <div
+                    class="p-error"
+                    *ngIf="
+                        confirmation.invalid &&
+                        (confirmation.dirty || confirmation.touched)
+                    "
+                >
+                    <span
+                        >Veuillez renseigner la confirmation du mot de
+                        passe</span
+                    >
+                </div>
+                <div
+                    class="p-error"
+                    *ngIf="
+                        (confirmation.dirty || confirmation.touched) &&
+                        changePasswordVo.newPassword !== pwdConfirmation
+                    "
+                >
+                    <span>Les mots de passe ne sont pas les mêmes</span>
+                </div>
+            </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="p-ml-auto text-right">
+            <button
+                type="reset"
+                label="Annuler"
+                (click)="showDialog = false"
+                class="p-button-raised p-button-text p-button-success mr-2"
+                pButton
+            ></button>
+            <button
+                type="submit"
+                [disabled]="!dtf.form.valid"
+                label="Enregistrer"
+                icon="pi pi-save"
+                class="p-button-raised p-button-text p-button-primary"
+                pButton
+            ></button>
+        </div>
+    </form>
+</p-dialog>
+
+<!-- Dialog-->
+<p-dialog
+    [(visible)]="showDialogPerso"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+    [style]="{ width: '50vw' }"
+>
+    <ng-template pTemplate="header">
+        <i class="pi-pencil pi p-mr-2" style="color: #8f1313"></i>
+        <span class="p-mr-auto" style="font-weight: bold; color: #333"
+            >Modifier données personnelles</span
+        >
+    </ng-template>
+
+    <p-progressBar
+        *ngIf="isDialogOpInProgress"
+        mode="indeterminate"
+    ></p-progressBar>
+    <p-message
+        *ngIf="dialogErrorMessage"
+        severity="error"
+        [text]="dialogErrorMessage"
+    ></p-message>
+    <p-divider></p-divider>
+
+    <form (ngSubmit)="edit()" #dtf1="ngForm">
+        <div class="p-fluid p-grid">
+            <!-- Email -->
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="emailAddress" style="font-weight: 600">Email</label>
+                <input
+                    id="emailAddress"
+                    name="emailAddress"
+                    #emailAddress="ngModel"
+                    [(ngModel)]="fonctionnaire.emailAddress"
+                    pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    pInputText
+                    required
+                    style="
+                        border-radius: 10px;
+                        border: 1px solid #ccc;
+                        padding: 0.5em;
+                    "
+                />
+                <div
+                    class="p-error"
+                    *ngIf="
+                        emailAddress.invalid &&
+                        (emailAddress.dirty || emailAddress.touched)
+                    "
+                >
+                    <span>Veuillez renseigner un email valide</span>
+                </div>
+            </div>
+
+            <!-- Téléphone -->
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="telephone" style="font-weight: 600"
+                    >Téléphone</label
+                >
+                <p-inputMask
+                    id="telephone"
+                    name="telephone"
+                    type="tel"
+                    #telephone="ngModel"
+                    [(ngModel)]="fonctionnaire.telephone"
+                    mask="(+226) 99-99-99-99"
+                    [unmask]="true"
+                    style="
+                        border-radius: 10px;
+                        border: 1px solid #ccc;
+                        padding: 0.5em;
+                    "
+                >
+                </p-inputMask>
+                <div
+                    class="p-error"
+                    *ngIf="
+                        telephone.invalid &&
+                        (telephone.dirty || telephone.touched)
+                    "
+                >
+                    <span
+                        >Veuillez renseigner un numéro de téléphone valide</span
+                    >
+                </div>
+            </div>
+
+            <!-- Unité administrative -->
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="uniteAdministrative" style="font-weight: 600"
+                    >Unité administrative</label
+                >
+                <input
+                    id="uniteAdministrative"
+                    name="uniteAdministrative"
+                    [(ngModel)]="fonctionnaire.uniteAdministrative"
+                    rows="4"
+                    pInputText
+                    style="
+                        border-radius: 10px;
+                        border: 1px solid #ccc;
+                        padding: 0.5em;
+                    "
+                />
+            </div>
+
+            <!-- Fonction -->
+            <div class="p-fluid p-col-12 p-md-6">
+                <label for="fonction" style="font-weight: 600">Fonction</label>
+                <input
+                    id="fonction"
+                    name="fonction"
+                    [(ngModel)]="fonctionnaire.fonction"
+                    rows="4"
+                    pInputText
+                    style="
+                        border-radius: 10px;
+                        border: 1px solid #ccc;
+                        padding: 0.5em;
+                    "
+                />
+            </div>
+        </div>
+
+        <p-divider></p-divider>
+
+        <div class="p-ml-auto text-right">
+            <button
+                type="reset"
+                label="Annuler"
+                (click)="showDialogPerso = false"
+                class="p-button-raised p-button-text p-button-secondary mr-2"
+                pButton
+                style="
+                    background-color: #f0f0f0;
+                    color: #555;
+                    border-radius: 25px;
+                    padding: 10px 20px;
+                "
+            ></button>
+            <button
+                type="submit"
+                [disabled]="!dtf1.form.valid"
+                label="Enregistrer"
+                icon="pi pi-save"
+                class="p-button-raised p-button-text p-button-primary"
+                pButton
+                style="
+                    background-color: #8f1313;
+                    color: white;
+                    border-radius: 25px;
+                    padding: 10px 20px;
+                "
+            ></button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>

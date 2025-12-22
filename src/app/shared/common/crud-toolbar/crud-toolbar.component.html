@@ -1,0 +1,23 @@
+<div class="h-4rem">
+    <button
+        pButton
+        label="Nouveau"
+        icon="pi pi-plus"
+        class="btn btn-sm btn-info float-right mb-2 p-button-info mr-2"
+        [disabled]="!enableCreate"
+        [hidden]="!enableCreate"
+        (click)="fireCreate()"
+    ></button>
+</div>
+
+<div class="h-4rem">
+    <button
+        pButton
+        label="Liste des pointages journalier"
+        icon="pi pi-list"
+        class="btn btn-sm btn-info float-right mb-2 p-button-info mr-2"
+        [disabled]="!enableListe"
+        [hidden]="!enableListe"
+        (click)="fireCreate()"
+    ></button>
+</div>

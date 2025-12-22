@@ -1,0 +1,136 @@
+<div id="login-bg" class="app-body">
+    <main class="main d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <div class="card-group">
+                        <div class="card p-4">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h3><i class="fa fa-lock fa-4x"></i></h3>
+                                    <h2 class="text-center">
+                                        Activation de compte ?
+                                    </h2>
+                                    <p>
+                                        Veuillez renseigner les données
+                                        suivantes
+                                    </p>
+                                    <div class="panel-body">
+                                        <form
+                                            *ngIf="!isSuccessful"
+                                            id="register-form"
+                                            role="form"
+                                            autocomplete="off"
+                                            name="form"
+                                            (ngSubmit)="
+                                                f.form.valid && onSubmit()
+                                            "
+                                            #f="ngForm"
+                                            novalidate
+                                        >
+                                            <div class="form-group">
+                                                <!-- Matricule -->
+                                                <div class="input-group mb-5">
+                                                    <span
+                                                        class="input-group-addon"
+                                                        ><i
+                                                            class="glyphicon glyphicon-envelope color-blue"
+                                                        ></i
+                                                    ></span>
+                                                    <input
+                                                        class="form-control"
+                                                        name="matricule"
+                                                        #emailAddress="ngModel"
+                                                        [(ngModel)]="
+                                                            form.matricule
+                                                        "
+                                                        id="matricule"
+                                                        placeholder="Le matricule"
+                                                        type="text"
+                                                        required
+                                                    />
+                                                </div>
+                                                <!-- Email -->
+                                                <div class="input-group">
+                                                    <span
+                                                        class="input-group-addon"
+                                                        ><i
+                                                            class="glyphicon glyphicon-envelope color-blue"
+                                                        ></i
+                                                    ></span>
+                                                    <input
+                                                        class="form-control"
+                                                        name="emailAddress"
+                                                        #emailAddress="ngModel"
+                                                        [(ngModel)]="
+                                                            form.emailAddress
+                                                        "
+                                                        id="emailAddress"
+                                                        placeholder="Adresse mail"
+                                                        type="email"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div
+                                                    class="alert alert-danger"
+                                                    role="alert"
+                                                    *ngIf="
+                                                        emailAddress.errors &&
+                                                        f.submitted
+                                                    "
+                                                >
+                                                    Veillez renseigner votre
+                                                    email!
+                                                </div>
+                                                <div
+                                                    class="alert alert-danger"
+                                                    role="alert"
+                                                    *ngIf="
+                                                        dialogErrorMessage &&
+                                                        f.submitted
+                                                    "
+                                                >
+                                                    Aucun compte trouvé pour
+                                                    cette adresse mail!
+                                                </div>
+                                                <!-- <div class="alert alert-danger" role="alert"> -->
+                                                <!-- <p-message *ngIf="dialogErrorMessage" severity="err" [text]="dialogErrorMessage"></p-message> -->
+                                                <!-- </div> -->
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <input
+                                                    name="recover-submit"
+                                                    id="bt"
+                                                    class="btn btn-lg btn-primary btn-block"
+                                                    value="Soumettre"
+                                                    type="submit"
+                                                />
+                                            </div>
+
+                                            <input
+                                                type="hidden"
+                                                class="hide"
+                                                name="token"
+                                                id="token"
+                                                value=""
+                                            />
+                                        </form>
+                                        <div class="form-group">
+                                            <div
+                                                class="alert alert-success"
+                                                *ngIf="isSuccessful"
+                                            >
+                                                Veuillez consulter votre boite
+                                                mail pour pourvuivre!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

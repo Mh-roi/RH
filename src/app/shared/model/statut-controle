@@ -1,0 +1,7 @@
+// src/app/shared/model/statut-controle.ts
+export type StatutControle = 'present' | 'absent';
+
+export interface IStatutControle {
+    id: number;
+    libelle: StatutControle;
+}

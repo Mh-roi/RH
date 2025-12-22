@@ -1,0 +1,96 @@
+<div>
+  <p-card>
+    <p-toast></p-toast>
+
+    <div class="p-d-flex">
+      <app-crud-toolbar [enableCreate]="enableCreate" (create)="onCreate()">
+      </app-crud-toolbar>
+      <div class="p-ml-auto">
+        <p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+        <p-progressSpinner *ngIf="isOpInProgress" strokeWidth="4" [style]="{width: '50px', height: '50px'}">
+        </p-progressSpinner>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    
+    <p-table #dt [value]="profils" responsiveLayout="stack" [paginator]="true" [rows]="recordsPerPage"
+      [loading]="isLoading" (onLazyLoad)="load($event)" [totalRecords]="totalRecords"
+      [globalFilterFields]="['libelle']"
+      currentPageReportTemplate="Affichage {first} à {last} de {totalRecords} élements" [showCurrentPageReport]=true
+      [rowsPerPageOptions]="[10, 20]" styleClass="p-datatable-sm">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="col-sm-auto">
+            <span>Liste des profils</span>
+          </div>
+          <div class="p-ml-auto p-mr-2 p-input-icon-left">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target)!.value, 'contains')"
+                placeholder="Recherche..." />
+            </span>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="libelle">Libelle
+            <p-sortIcon field="libelle"></p-sortIcon>
+          </th>
+          <th SortableColumn="Code">Code</th>
+          
+          <th style="width:10%">Actions</th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-profil let-columns="columns">
+        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" [pContextMenuRow]="profil">
+          <td>{{profil.libelle}}</td>
+          <td>{{profil.code}}</td>
+         <td>
+          <app-actions-toolbal-iud (info)="onInfo(profil)" [enableBtnInfo]="enableBtnInfo" (edit)="onEdit(profil)"
+          [enableBtnEdit]="enableBtnEdit" (delete)="onDelete(profil)" [enableBtnDelete]="enableBtnDelete">
+        </app-actions-toolbal-iud>
+         </td>
+            
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+
+  <!-- Dialog-->
+  <p-dialog [(visible)]="showDialog" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}" >
+    <ng-template pTemplate="header">
+      <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1"></i>
+      <span class="p-mr-auto">
+        {{profil.id ? 'Modifier' : 'Ajouter'}} un profil 
+      </span>
+    </ng-template>
+    <p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate"></p-progressBar>
+    <p-message *ngIf="dialogErrorMessage" severity="error" [text]="dialogErrorMessage"></p-message>
+    <p-divider></p-divider>
+    <!-- Form -->
+    
+    <form (ngSubmit)="save()" #dtf="ngForm">
+        <div class="p-field p-fluid">
+            <label for="libelle">Libellé</label>
+            <input id="libelle" name="libelle" #libelle="ngModel" [(ngModel)]="profil.libelle" pInputText required />
+        </div>
+        <div class="p-field p-fluid">
+            <label for="code">Code</label>
+            <input id="code" name="code" #code="ngModel" [(ngModel)]="profil.code" pInputText required />
+        </div>
+      <p-divider></p-divider>
+      <div class="p-ml-auto text-right">
+        <button type="submit" [disabled]="!dtf.form.valid" label="{{isEditing() ? 'Enregistrer' : 'Ajouter'}}"
+          icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+          class="p-button-raised p-button-text {{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+
+  <p-confirmDialog></p-confirmDialog>

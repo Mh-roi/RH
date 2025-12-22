@@ -1,0 +1,32 @@
+<!-- formulaire d'affichage du détail -->
+<ng-template pTemplate="header">
+    <span class="p-mr-auto"> <b>DETAILS ACTIVITE</b></span>
+  </ng-template>
+  <!-- <p-divider></p-divider> -->
+  <hr>
+  <div class="row">
+    <div class="col-md-12 details-item">
+      <span class="va-m"><span class="font-bold">Libelle:</span> {{activite.libelle}}</span>
+    </div>
+    <div class="col-md-12 details-item">
+      <span class="va-m"><span class="font-bold">Ponderation:</span> {{activite.ponderation}}</span>
+    </div>
+    <div class="col-md-12 details-item">
+        <span class="va-m"><span class="font-bold">Taux de réalisation:</span> {{activite.taux_realisation}}</span>
+      </div>
+      <div class="col-md-12 details-item">
+        <span class="va-m"><span class="font-bold">Année:</span> {{activite.annee}}</span>
+      </div>
+      <div class="col-md-12 details-item">
+        <span class="va-m"><span class="font-bold">Observations:</span> {{activite.observation}}</span>
+      </div>
+      <div class="col-md-12 details-item">
+        <!-- <span class="va-m"><span class="font-bold">Fonctionnaire:</span> {{activite.fonctionnaire}}</span> -->
+      </div>
+  
+  </div>
+  <!-- <p-divider></p-divider> -->
+  <div class="p-ml-auto text-right">
+    <button description="reset" icon="pi pi-times" label="Fermer" (click)="clear()" class="p-button-filter mr-2"
+      pButton></button>
+  </div>

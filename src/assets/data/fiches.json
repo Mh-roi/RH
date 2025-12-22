@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "reference": "FICHE-001",
+    "statut": "elaboree",
+    "date_elaboration": "2024-06-01",
+    "date_certification": null,
+    "position": "DRH",
+    "type": "A",
+    "heure": "08:00"
+  },
+  {
+    "id": 2,
+    "reference": "FICHE-002",
+    "statut": "edite",
+    "date_elaboration": "2024-06-02",
+    "date_certification": null,
+    "position": "Chef de service",
+    "type": "B",
+    "heure": "09:15"
+  },
+  {
+    "id": 3,
+    "reference": "FICHE-003",
+    "statut": "certifie",
+    "date_elaboration": "2024-06-03",
+    "date_certification": "2024-06-05",
+    "position": "DRH",
+    "type": "C",
+    "heure": "10:30"
+  },
+  {
+    "id": 4,
+    "reference": "FICHE-004",
+    "statut": "publie",
+    "date_elaboration": "2024-06-04",
+    "date_certification": "2024-06-06",
+    "position": "Ministre",
+    "type": "D",
+    "heure": "11:00"
+  },
+  {
+    "id": 5,
+    "reference": "FICHE-005",
+    "statut": "elaboree",
+    "date_elaboration": "2024-06-05",
+    "date_certification": null,
+    "position": "Chef de service",
+    "type": "A",
+    "heure": "08:45"
+  },
+  {
+    "id": 6,
+    "reference": "FICHE-006",
+    "statut": "elaboree",
+    "date_elaboration": "2024-06-06",
+    "date_certification": null,
+    "position": "DRH",
+    "type": "B",
+    "heure": "09:00"
+  },
+  {
+    "id": 7,
+    "reference": "FICHE-007",
+    "statut": "edite",
+    "date_elaboration": "2024-06-07",
+    "date_certification": null,
+    "position": "Chef de service",
+    "type": "C",
+    "heure": "10:15"
+  },
+  {
+    "id": 8,
+    "reference": "FICHE-008",
+    "statut": "certifie",
+    "date_elaboration": "2024-06-08",
+    "date_certification": "2024-06-10",
+    "position": "DRH",
+    "type": "D",
+    "heure": "11:30"
+  },
+  {
+    "id": 9,
+    "reference": "FICHE-009",
+    "statut": "publie",
+    "date_elaboration": "2024-06-09",
+    "date_certification": "2024-06-11",
+    "position": "Ministre",
+    "type": "A",
+    "heure": "07:50"
+  },
+  {
+    "id": 10,
+    "reference": "FICHE-010",
+    "statut": "elaboree",
+    "date_elaboration": "2024-06-10",
+    "date_certification": null,
+    "position": "Chef de service",
+    "type": "B",
+    "heure": "08:20"
+  }
+]

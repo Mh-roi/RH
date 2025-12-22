@@ -1,0 +1,29 @@
+<div class="flex-container justify-content-center hearder-top p-2 pt-3 bg-light">
+    <div class="col-1 col-md-1 flex-item-center">
+        <a class="navbar-brand" href="/">
+            <img src="assets/img/armoirie_BF.png" width="80px" height="100px" alt="BURKINA FASO">
+        </a>
+    </div>
+    <div class="col-10 col-md-8 flex-item-left w-25 text-center">
+        <h3 class="mt-2">Plateforme de contrôle de présences des agents de la fonction publique</h3>
+        <h4 class="sub-title mt-4">Bienvenue sur la Plateforme <span class="text-warnings">DI</span>GI<span class="text-warnings">COP</span></h4>
+    </div>
+
+    <div class="col-1 float-right">
+        <a class="navbar-brand" href="/">
+            <img src="assets/img/flag.png" width="80px" height="100px" alt="BURKINA FASO">
+        </a>
+    </div>
+</div>
+
+<div class="relative overflow-hidden flex flex-column justify-content-center">
+    <div class="bg-circle opacity-50" style="top: -200px; left: -700px;"></div>
+    <div class="bg-circle hidden lg:flex" style="top: 50px; right:-800px; transform: rotate(60deg)"></div>
+    <div class="" style="background-color: white;">
+        <app-agent-menu></app-agent-menu>
+        <div class="py-4 mx-0 lg:mx-12 lg:px-12 z-2">
+            <router-outlet></router-outlet>
+            <!-- <app-footer></app-footer> -->
+        </div>
+    </div>
+</div>

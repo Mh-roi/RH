@@ -1,0 +1,213 @@
+<!-- Header -->
+<ng-template pTemplate="header" class="form-header">
+    <i class="pi pi-file-edit mr-2"></i>
+    <h3>Justification d'absence</h3>
+</ng-template>
+
+<!-- Progress Bar -->
+<p-progressBar *ngIf="loading" mode="indeterminate"></p-progressBar>
+
+<!-- Message Display -->
+<p-message
+    *ngIf="message"
+    [severity]="message.severity"
+    [text]="message.summary"
+></p-message>
+
+<!-- Main Form -->
+<form
+    (ngSubmit)="submitReclamation()"
+    #form="ngForm"
+    class="justification-form"
+>
+    <div class="field d-flex align-items-end gap-3" style="gap: 1rem">
+        <div style="flex: 4">
+            <h4>Sélection de l'agent</h4>
+            <label id="fiche" class="p-tag-info"
+                >Fiche {{ fiche?.typeFiche }} ({{ fiche?.reference }})</label
+            >
+        </div>
+        <!-- Agent Selection -->
+        <div class="form-section" style="flex: 2">
+            <p-dropdown
+                [options]="agents"
+                [(ngModel)]="selectedAgent"
+                optionLabel="matricule"
+                name="agent"
+                placeholder="Sélectionnez un agent"
+                [showClear]="true"
+                (onChange)="loadPointages()"
+            >
+                <ng-template let-agent pTemplate="item">
+                    <div>
+                        {{ agent.matricule }} - {{ agent.nom }}
+                        {{ agent.prenom }}
+                    </div>
+                </ng-template>
+                <ng-template let-agent pTemplate="selectedItem">
+                    <div>
+                        {{ agent.matricule }} - {{ agent.nom }}
+                        {{ agent.prenom }}
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+    </div>
+
+    <!-- Date Range Selection -->
+    <!-- <div class="form-section">
+        <h4>2. Période concernée</h4>
+        <div class="date-range">
+            <div class="date-field">
+                <label>Date de début</label>
+                <p-calendar
+                    [(ngModel)]="startDate"
+                    name="startDate"
+                    [showIcon]="true"
+                    [showButtonBar]="true"
+                    dateFormat="dd/mm/yy"
+                ></p-calendar>
+            </div>
+            <div class="date-field">
+                <label>Date de fin</label>
+                <p-calendar
+                    [(ngModel)]="endDate"
+                    name="endDate"
+                    [showIcon]="true"
+                    dateFormat="dd/mm/yy"
+                ></p-calendar>
+            </div>
+            <button
+                pButton
+                type="button"
+                label="Filtrer"
+                class="p-button-info"
+                icon="pi pi-search"
+                (click)="chargerPointagesStatiques()"
+                [disabled]="!selectedAgent"
+            ></button>
+        </div>
+    </div> -->
+
+    <!-- Pointages List -->
+    <!-- <div class="form-section" *ngIf="filteredPointages.length > 0">
+        <h4>3. Pointages concernés</h4>
+        <p-table
+            [value]="filteredPointages"
+            [paginator]="true"
+            [rows]="5"
+            selectionMode="multiple"
+            [(selection)]="selectedPointages"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Statut</th>
+                    <th>Lieu</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-pointage>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="pointage"></p-tableCheckbox>
+                    </td>
+                    <td>{{ pointage.date_controle | date : "dd/MM/yyyy" }}</td>
+                    <td>{{ pointage.heure_controle }}</td>
+                    <td>
+                        <span
+                            [class]="
+                                'status-badge status-' +
+                                pointage.statut_controle
+                            "
+                        >
+                            {{ pointage.statut_controle }}
+                        </span>
+                    </td>
+                    <td>{{ pointage.lieu_controle }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div> -->
+
+    <!-- Justification Details -->
+    <div class="form-section">
+        <h4>Détails de la réclamation</h4>
+
+        <!-- Comment -->
+        <div class="field d-flex align-items-end gap-2" style="gap: 1rem">
+            <div style="flex: 2">
+                <label for="reference">Statut de réclamation</label>
+                <input
+                    type="text"
+                    min="0"
+                    id="statutReclamation"
+                    name="statutReclamation"
+                    disabled
+                    [(ngModel)]="reclamation.statutReclamation"
+                    class="w-full p-2 border border-solid border-round surface-border"
+                />
+            </div>
+            <div style="flex: 2">
+                <label for="comment">Le sujet</label>
+                <textarea
+                    id="sujet"
+                    name="sujet"
+                    [(ngModel)]="reclamation.sujet"
+                    placeholder="Entrez votre commentaire ici"
+                    rows="2"
+                    required
+                    class="w-full p-2 border border-solid border-round surface-border"
+                ></textarea>
+            </div>
+        </div>
+
+        <!-- Document -->
+        <div class="field">
+            <!-- <label for="document">Pièce justificative (PDF)</label> -->
+            <p-fileUpload
+                name="document"
+                [customUpload]="true"
+                accept="application/pdf"
+                [maxFileSize]="5000000"
+                chooseLabel="Choisir une Pièce justificative (PDF)"
+                [showUploadButton]="false"
+                [showCancelButton]="false"
+                (onSelect)="onFileSelect($event)"
+                (onClear)="onFileClear()"
+            >
+            </p-fileUpload>
+        </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+        <button
+            pButton
+            type="button"
+            label="Annuler"
+            icon="pi pi-times"
+            class="p-button-secondary"
+            (click)="clear()"
+        ></button>
+        <button
+            pButton
+            type="button"
+            label="Rafraichir"
+            icon="pi pi-times"
+            class="p-button-danger"
+            (click)="cancel()"
+        ></button>
+        <button
+            pButton
+            type="submit"
+            label="Valider"
+            icon="pi pi-check"
+            class="p-button-success"
+            [disabled]="!form.valid"
+        ></button>
+    </div>
+</form>

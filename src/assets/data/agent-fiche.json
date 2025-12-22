@@ -1,0 +1,107 @@
+[
+    {
+      "ficheId": 1,
+      "agentMatricule": "AG001",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 1,
+      "agentMatricule": "AG002",
+      "statut": "Absent",
+      "duree_absence_H": 2,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 1,
+      "agentMatricule": "AG003",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 2,
+      "agentMatricule": "AG004",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 2,
+      "agentMatricule": "AG005",
+      "statut": "Absent",
+      "duree_absence_H": 1,
+      "duree_absence_J": 1
+    },
+    {
+      "ficheId": 2,
+      "agentMatricule": "AG006",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 3,
+      "agentMatricule": "AG007",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 3,
+      "agentMatricule": "AG008",
+      "statut": "Absent",
+      "duree_absence_H": 3,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 3,
+      "agentMatricule": "AG009",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 4,
+      "agentMatricule": "AG010",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 4,
+      "agentMatricule": "AG011",
+      "statut": "Absent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 2
+    },
+    {
+      "ficheId": 5,
+      "agentMatricule": "AG012",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 5,
+      "agentMatricule": "AG013",
+      "statut": "Absent",
+      "duree_absence_H": 1,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 5,
+      "agentMatricule": "AG014",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    },
+    {
+      "ficheId": 5,
+      "agentMatricule": "AG015",
+      "statut": "Présent",
+      "duree_absence_H": 0,
+      "duree_absence_J": 0
+    }
+  ]

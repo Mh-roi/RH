@@ -1,0 +1,51 @@
+<!-- Rest of your template code -->
+
+<!-- Form -->
+<form (ngSubmit)="saveFichePoste()" #dtf="ngForm" style="margin-top:20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+
+    <!--  -->
+  
+    <div class="field">
+      <label for="code">code :</label>
+      <input type="text" id="code" name="code" #code="ngModel" [(ngModel)]="fichesPoste.code" required
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+  
+    </div>
+  
+    <div class="field">
+      <label for="libelle">Libelle :</label>
+      <input type="text" id="libelle" name="libelle" #libelle="ngModel" [(ngModel)]="fichesPoste.libelle" required
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+  
+    <div class="field col-span-2">
+        <label for="description">Fiche de poste</label>
+        <input type="file" id="file" (change)="onSelectFile($event)">
+        <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+      </div>
+  
+    <div class="field col-span-2">
+      <label for="profilAgent">Catégorie :</label>
+      <div>
+        <p-dropdown autoWidth="false" styleClass="mb-3" [style]="{'width':'100%'}" [options]="categories"
+          [(ngModel)]="fichesPoste.categorie" optionLabel="libelle" inputId="categorie" name="categorie"
+          placeholder="Selectionner la categorie..." [filter]="true" appendTo="body" [showClear]="true">
+        </p-dropdown>
+      </div>
+    </div>
+  
+    <!-- <p-divider></p-divider> -->
+    <div class="col-span-2 text-right" style="display: flex; align-items: center; justify-content: flex-end;">
+    <button type="reset" label="Effacer" class="p-button-filter mr-3 float-left" pButton
+      icon="pi pi-trash"></button>
+
+    <div style="display: flex;">
+      <button label="Annuler" (click)="clear()" class="p-button-filter mr-3" pButton icon="pi pi-times"></button>
+      <button type="submit" [disabled]="!dtf.form.valid" label="{{isEditing() ? 'Enregistrer' : 'Ajouter'}}"
+        icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+        class="  {{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+      </button>
+    </div>
+  </div>
+</form>
+  

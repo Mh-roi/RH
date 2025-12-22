@@ -1,0 +1,222 @@
+<div>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-eye"
+        label=""
+        pTooltip="Détail"
+        class="btn-sm btn-primary mr-2"
+        [hidden]="!enableBtnInfo"
+        (click)="fireInfo()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-pencil"
+        label=""
+        pTooltip="Modifier"
+        class="btn-sm btn-warning mr-2"
+        [hidden]="!enableBtnEdit"
+        (click)="fireEdit()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-trash"
+        label=""
+        class="btn-sm btn-danger mr-2"
+        pTooltip="Supprimer"
+        [hidden]="!enableBtnDelete"
+        (click)="fireDelete()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-download"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Telecharger"
+        [hidden]="!enableBtnDownload"
+        (click)="fireDownload()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-bookmark"
+        label="Privileges"
+        class="btn-sm btn-secondary mr-2"
+        pTooltip="Privileges"
+        [hidden]="!enableBtnPrivilege"
+        (click)="firePrivilege()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-lock"
+        label=""
+        class="btn-sm btn-secondary mr-2"
+        pTooltip="Cloturer"
+        [hidden]="!enableBtnClose"
+        (click)="fireClose()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-send"
+        label=""
+        class="btn-sm btn-secondary mr-2"
+        pTooltip="Renvoie du mail"
+        [hidden]="!enableBtnEmail"
+        (click)="fireEmail()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-send"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Traiter"
+        [hidden]="!enableBtnTreat"
+        (click)="fireTreat()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-chart-line"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Evaluer"
+        [hidden]="!enableBtnEval"
+        (click)="fireEvaluer()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-undo"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Changer"
+        [hidden]="!enableBtnChanger"
+        (click)="fireChanger()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-check"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Modifier profil"
+        [hidden]="!enableBtnEditProfil"
+        (click)="fireEditProfil()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-chart-line"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Validation"
+        [hidden]="!enableBtnValidation"
+        (click)="fireValidation()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-chart-line"
+        label=""
+        class="p-button-raised btn-sm btn-success mr-2"
+        pTooltip="Valider note"
+        [hidden]="!enableBtnAccepter"
+        (click)="fireAccepter()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-bookmark"
+        label=""
+        class="btn-sm btn-success mr-2"
+        pTooltip="Attribuer des activités"
+        [hidden]="!enableBtnAttribuer"
+        (click)="fireAttribuer()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-pencil"
+        label=""
+        pTooltip="Evaluer l'agent"
+        class="p-button-raised p-button-primary mr-2"
+        [hidden]="!enableBtnNoter"
+        (click)="fireNoter()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-ban"
+        label=""
+        pTooltip="Désactiver compte"
+        class="p-button-raised p-button-danger mr-2"
+        [hidden]="!enableBtnDisableCompte"
+        (click)="fireDesactiverCompte()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-ban"
+        label=""
+        pTooltip="Certifier un Rapport"
+        class="btn-sm btn-success mr-2"
+        [hidden]="!enableBtnCertifierRapport"
+        (click)="fireCertifierRapport()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-ban"
+        label=""
+        pTooltip="Affiche les pointages"
+        class="p-button-raised p-button-primary mr-2"
+        [hidden]="!enableBtnListe"
+        (click)="fireListe()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-user"
+        label=""
+        class="p-button-raised p-button-info mr-2"
+        pTooltip="Pointer présence/absence"
+        [hidden]="!enableBtnPointer"
+        (click)="firePointer()"
+    ></button>
+    <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-trash"
+        label=""
+        class="p-button-raised p-button-danger mr-2"
+        pTooltip="Retirer l'agent"
+        [hidden]="!enableBtnRejeter"
+        (click)="fireRejeter()"
+    ></button>
+</div>

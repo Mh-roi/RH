@@ -1,0 +1,88 @@
+.justification-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.form-section {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.date-range {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.date-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.field {
+    margin-bottom: 1rem;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.status-present {
+    background: #c8e6c9;
+    color: #256029;
+}
+
+.status-absent {
+    background: #ffcdd2;
+    color: #c63737;
+}
+
+.status-absent_j {
+    background: #feedaf;
+    color: #8a5340;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+::ng-deep .p-fileupload-choose {
+    background: #7c847f !important;
+    /* vert PrimeNG */
+    color: hsl(0, 89%, 4%) !important;
+}
+
+::ng-deep .p-calendar .p-datepicker-trigger .pi-calendar {
+    color: #dc2626 !important;
+    /* Rouge (ex: Tailwind red-600) */
+}
+
+::ng-deep .p-calendar-w-btn .p-datepicker-trigger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: aliceblue !important;
+}
+
+label#fiche {
+    font-size: medium;
+    color: crimson;
+    font-style: oblique;
+    font-family: revert;
+    background: rgb(147, 163, 147);
+    border-radius: 3px;
+}

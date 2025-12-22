@@ -1,0 +1,23 @@
+[
+    {
+      "id" : 1,
+      "code_type" : "TA01",
+      "libelle": "Type assure 1"
+    },
+    {
+        "id" : 2,
+        "code_type" : "TA02",
+        "libelle": "Type assure 2"
+      },
+      {
+        "id" : 3,
+        "code_type" : "TA03",
+        "libelle": "Type assure 3"
+      },
+      {
+        "id" : 4,
+        "code_type" : "TA04",
+        "libelle": "Type assure 4"
+      }
+
+  ]

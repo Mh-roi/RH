@@ -1,0 +1,32 @@
+[
+    {
+      "id" : 1,
+      "code" : "GHGH",
+      "libelle": "Province 1",
+      "region": {
+        "id": 1,
+        "code": "GHGHG",
+        "libelle": "Région 1"
+      } 
+    },
+    {
+        "id" : 2,
+        "code" : "GHGH",
+        "libelle": "Province 2",
+        "region": {
+          "id": 1,
+          "code": "GHGHG",
+          "libelle": "Région 1"
+        } 
+    },
+    {
+        "id" : 3,
+        "code" : "GHGH",
+        "libelle": "Province 3",
+        "region": {
+          "id": 1,
+          "code": "GHGHG",
+          "libelle": "Région 1"
+        } 
+    }
+  ]

@@ -1,0 +1,49 @@
+/* Style pour les messages */
+.p-message-success {
+    background-color: #e6f7e6;
+    border-color: #a3e8a3;
+}
+
+.p-message-error {
+    background-color: #ffe6e6;
+    border-color: #ffa3a3;
+}
+
+/* Espacement dans le dialogue */
+.p-dialog .p-fluid .p-field {
+    margin-bottom: 1.5rem;
+}
+
+/* Style pour les boutons */
+.p-button-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.p-button-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Personnalisation du dialogue */
+.p-dialog .p-dialog-content {
+    padding: 1.5rem;
+}
+
+/* Style pour les sections */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--surface-700);
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--surface-200);
+    padding-bottom: 0.5rem;
+}
+
+/* Adaptation mobile */
+@media screen and (max-width: 768px) {
+    .p-dialog {
+        width: 95% !important;
+        min-height: 70vh !important;
+    }
+}

@@ -1,0 +1,66 @@
+:host {
+    display: block;
+    padding: 1rem;
+}
+
+.grid {
+    background-color: #eff3f0;
+}
+
+.pointage-details {
+    font-size: medium;
+
+    .detail-label {
+        font-weight: 900;
+        color: var(--text-color-secondary);
+        padding: 0.5rem 0;
+    }
+
+    .detail-value {
+        padding: 0.5rem 0;
+        margin-bottom: 0.25rem;
+    }
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+
+    &.status-present {
+        background: #c8e6c9;
+        color: #256029;
+    }
+
+    &.status-absent {
+        background: #ffcdd2;
+        color: #c63737;
+    }
+
+    &.status-absent_j {
+        background: #feedaf;
+        color: #8a5340;
+    }
+}
+
+.no-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-color-secondary);
+
+    i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .grid {
+        flex-direction: column;
+    }
+}

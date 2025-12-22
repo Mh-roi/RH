@@ -1,0 +1,80 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+
+<!-- Header -->
+<ng-template pTemplate="header" style="background-color:#1e88e0; padding: 5px 10px;">
+    <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1 mr-2"></i>
+    <h3 class="mr-auto">
+        {{ministere.id ? 'Formulaire de modification' : 'Formulaire d\'ajout de'}} ministère
+    </h3>
+</ng-template>
+
+<!-- Progress bar + Message -->
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+
+<!-- Formulaire -->
+<form (ngSubmit)="saveEntity()" #dtf="ngForm" style="margin-top:20px;">
+
+    <div class="formgrid grid">
+        <!-- Libelle -->
+        <div class="field col-12 md:col-6">
+            <label for="libelle">Libellé :</label>
+            <input type="text" id="libelle" name="libelle" [(ngModel)]="ministere.libelle" required
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary" />
+        </div>
+
+        <!-- Code -->
+        <div class="field col-12 md:col-6">
+            <label for="code">Code :</label>
+            <input type="text" id="code" name="code" [(ngModel)]="ministere.code" required
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary" />
+        </div>
+
+        <!-- Sigle -->
+        <div class="field col-12 md:col-6">
+            <label for="sigle">Sigle :</label>
+            <input type="text" id="sigle" name="sigle" [(ngModel)]="ministere.sigle"
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary" />
+        </div>
+
+        <!-- Description -->
+        <div class="field col-12 md:col-6">
+            <label for="description">Description :</label>
+            <input type="text" id="description" name="description" [(ngModel)]="ministere.description"
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary" />
+        </div>
+
+        <!-- Organisation -->
+        <div class="field col-12">
+            <label for="organisation">Organisation :</label>
+            <textarea id="organisation" name="organisation" [(ngModel)]="ministere.organisation" rows="3"
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary"></textarea>
+        </div>
+
+        <!-- Mission -->
+        <div class="field col-12">
+            <label for="mission">Mission :</label>
+            <textarea id="mission" name="mission" [(ngModel)]="ministere.mission" rows="3"
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary"></textarea>
+        </div>
+
+        <!-- Effectif -->
+        <div class="field col-12 md:col-6">
+            <label for="effectif">Effectif :</label>
+            <input type="number" id="effectif" name="effectif" [(ngModel)]="ministere.effectif"
+                class="text-base w-full p-2 border-round border-1 border-solid surface-border appearance-none focus:border-primary" />
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-right mt-4">
+        <button type="reset" label="Effacer" class="p-button-filter mr-3 float-left" pButton icon="pi pi-trash"></button>
+        <button type="button" (click)="clear()" label="Annuler" class="p-button-filter mr-3" pButton icon="pi pi-times"></button>
+        <button type="submit" [disabled]="!dtf.form.valid"
+            label="{{isEditing() ? 'Enregistrer' : 'Ajouter'}}"
+            icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+            class="{{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+        </button>
+    </div>
+</form>

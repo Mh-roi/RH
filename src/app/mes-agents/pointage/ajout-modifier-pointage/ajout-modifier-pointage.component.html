@@ -1,0 +1,218 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+<!-- <p-divider></p-divider> -->
+<ng-template
+    pTemplate="header"
+    style="
+        background-color: #085d32;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    "
+>
+    <i class="{{ isEditing() ? 'pi-pencil' : 'pi-plus' }} pi p-mr-1 mr-2"></i>
+    <h3 class="mr-auto">
+        {{
+            pointage.id ? "Formulaire de modification" : "Formulaire d'ajout de"
+        }}
+        pointage
+    </h3>
+</ng-template>
+<p-progressBar
+    *ngIf="isDialogOpInProgress"
+    mode="indeterminate"
+    color="#1e88e0"
+></p-progressBar>
+<p-message
+    *ngIf="message"
+    [severity]="message.severity"
+    [text]="message.summary"
+></p-message>
+
+<span class="p-mr-auto">
+    <h4 class="agent">
+        Pointer l'agent : {{ selectedFonctionnaire?.matricule }} --
+        {{ selectedFonctionnaire?.nom }}" {{ selectedFonctionnaire?.prenom }}"
+    </h4>
+</span>
+<form
+    (ngSubmit)="saveOrUpdatePointage()"
+    #dtf="ngForm"
+    style="
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    "
+>
+    <!-- Agent -->
+    <!-- <div class="field col-12">
+    <label for="agent_id">Agent :</label>
+    <select
+      id="agent_id"
+      name="agent_id"
+      required
+      [(ngModel)]="pointage.agent_id"
+      class="w-full p-2 border border-solid border-round surface-border"
+    >
+      <option *ngFor="let agent of agents" [value]="agent.id">
+        {{ agent.nom }} {{ agent.prenom }}
+      </option>
+    </select>
+  </div> -->
+
+    <!-- Date -->
+    <div class="field col-12">
+        <label for="date">Date de contrôle :</label>
+        <input
+            type="date"
+            id="date"
+            name="date_controle"
+            [(ngModel)]="pointage.dateControle"
+            required
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+
+    <!-- Heure -->
+    <div class="field col-12">
+        <label for="heure">Heure de contrôle :</label>
+        <input
+            type="time"
+            id="heure"
+            name="heure_controle"
+            [(ngModel)]="pointage.heureControle"
+            required
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+
+    <!-- Lieu -->
+    <div class="field col-12">
+        <label for="lieu">Lieu de contrôle :</label>
+        <input
+            type="text"
+            id="lieu"
+            name="lieu_controle"
+            [(ngModel)]="pointage.lieuControle"
+            required
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+
+    <!-- Statut -->
+    <div class="field col-12">
+        <label for="statut">Statut :</label>
+        <select
+            id="statut"
+            name="statut_controle"
+            [(ngModel)]="pointage.statutControle"
+            required
+            class="w-full p-2 border border-solid border-round surface-border"
+        >
+            <option value="PRESENT">Présent</option>
+            <option value="ABSENT_JUSTIFIE">Absence justifiée</option>
+            <option value="ABSENT">Absent</option>
+        </select>
+    </div>
+
+    <!-- Durée de l'absence -->
+    <div
+        class="field col-6"
+        *ngIf="
+            pointage.statutControle === 'ABSENT' ||
+            pointage.statutControle === 'ABSENT_JUSTIFIE'
+        "
+    >
+        <label for="dureeH">Durée (Heures) :</label>
+        <input
+            type="number"
+            min="0"
+            max="8"
+            step="1"
+            id="dureeH"
+            name="duree_absence_H"
+            [(ngModel)]="pointage.dureeAbsenceH"
+            (ngModelChange)="onDureeHeureChange()"
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+    <div
+        class="field col-6"
+        *ngIf="
+            pointage.statutControle === 'ABSENT' ||
+            pointage.statutControle === 'ABSENT_JUSTIFIE'
+        "
+    >
+        <label for="dureeJ">Durée (Jours) :</label>
+        <input
+            type="number"
+            id="dureeJ"
+            name="duree_absence_J"
+            [value]="pointage.dureeAbsenceJ"
+            [disabled]="true"
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+
+    <!--   Justification (si absent) -->
+    <div
+        class="field col-12"
+        *ngIf="pointage.statutControle === 'ABSENT_JUSTIFIE'"
+    >
+        <label for="justification">Justification :</label>
+        <textarea
+            id="justification"
+            name="justification"
+            [(ngModel)]="pointage.justification"
+            class="w-full p-2 border border-solid border-round surface-border"
+        ></textarea>
+    </div>
+    <div
+        class="field col-6"
+        *ngIf="pointage.statutControle === 'ABSENT_JUSTIFIE'"
+    >
+        <label for="reference_piece">Référence pièce :</label>
+        <input
+            type="text"
+            min="0"
+            id="reference_piece"
+            name="referencePJ"
+            [(ngModel)]="pointage.referencePJ"
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+    <!--  Pièce justificative PDF (si absent) -->
+    <div
+        class="field col-12"
+        *ngIf="pointage.statutControle === 'ABSENT_JUSTIFIE'"
+    >
+        <label for="pieceJustificative">Pièce justificative (PDF) :</label>
+        <input
+            type="file"
+            id="pieceJustificative"
+            name="pieceJustificative"
+            accept="application/pdf"
+            (change)="onFileSelected($event)"
+            class="w-full p-2 border border-solid border-round surface-border"
+        />
+    </div>
+
+    <!-- Boutons -->
+    <div class="col-span-2 text-right" style="grid-column: span 2">
+        <button type="reset" class="p-button-filter mr-3" pButton>
+            <i class="pi pi-trash mr-1"></i> Réinitialiser
+        </button>
+
+        <button
+            type="submit"
+            class="p-button-success"
+            pButton
+            icon="pi pi-check"
+            [disabled]="!isFormValid()"
+        >
+            Enregistrer le pointage
+        </button>
+    </div>
+</form>

@@ -1,0 +1,45 @@
+[
+    {
+      "id" : 1,
+      "code" : "PROFE1",
+      "libelle": "Profession 1"
+      
+    },
+    {
+        "id" : 2,
+        "code" : "PROFE2",
+        "libelle": "Profession 2"
+        
+    },
+    {
+        "id" : 3,
+        "code" : "PROFE3",
+        "libelle": "Profession 3"
+       
+    },
+    {
+      "id" : 4,
+      "code" : "PROFE4",
+      "libelle": "Profession 4"
+     
+  },
+  {
+    "id" : 5,
+    "code" : "PROFE5",
+    "libelle": "Profession 5"
+   
+},
+{
+  "id" : 6,
+  "code" : "PROFE6",
+  "libelle": "Profession 6"
+ 
+}
+,
+  {
+    "id" : 7,
+    "code" : "PROFE7",
+    "libelle": "Profession 7"
+   
+}
+  ]

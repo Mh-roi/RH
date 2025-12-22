@@ -1,0 +1,84 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+
+<ng-template pTemplate="header" style="background-color:#1e88e0; padding: 10px;">
+  <i class="{{ isEditing() ? 'pi-pencil' : 'pi-plus' }} pi p-mr-1 mr-2"></i>
+  <h3 class="mr-auto">
+    {{ fonction.id ? 'Formulaire de modification de' : 'Formulaire d\'ajout de' }} fonction
+  </h3>
+</ng-template>
+
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+
+<!-- Formulaire -->
+<form (ngSubmit)="saveEntity()" #dtf="ngForm" style="margin-top:20px;">
+  <div class="formgrid grid">
+
+    <!-- Libelle -->
+    <div class="field col-12 md:col-6">
+      <label for="libelle">Libellé :</label>
+      <input
+        type="text"
+        id="libelle"
+        name="libelle"
+        [(ngModel)]="fonction.libelle"
+        required
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full"
+      />
+    </div>
+
+    <!-- Code -->
+    <div class="field col-12 md:col-6">
+      <label for="code">Code :</label>
+      <input
+        type="text"
+        id="code"
+        name="code"
+        [(ngModel)]="fonction.code"
+        required
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full"
+      />
+    </div>
+
+    <!-- Sigle -->
+    <div class="field col-12 md:col-6">
+      <label for="sigle">Sigle :</label>
+      <input
+        type="text"
+        id="sigle"
+        name="sigle"
+        [(ngModel)]="fonction.sigle"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full"
+      />
+    </div>
+
+    <!-- Rang -->
+    <div class="field col-12 md:col-6">
+      <label for="rang">Rang :</label>
+      <input
+        type="number"
+        id="rang"
+        name="rang"
+        [(ngModel)]="fonction.rang"
+        required
+        min="0"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full"
+      />
+    </div>
+
+  </div>
+
+  <div class="text-right mt-4">
+    <button type="reset" class="p-button-secondary mr-2" pButton icon="pi pi-trash" label="Effacer"></button>
+    <button type="button" (click)="clear()" class="p-button-danger mr-2" pButton icon="pi pi-times" label="Annuler"></button>
+    <button
+      type="submit"
+      [disabled]="!dtf.form.valid"
+      class="{{ isEditing() ? 'p-button-primary' : 'p-button-success' }}"
+      pButton
+      [icon]="'pi ' + (isEditing() ? 'pi-save' : 'pi-plus')"
+      [label]="isEditing() ? 'Enregistrer' : 'Ajouter'"
+    ></button>
+  </div>
+</form>

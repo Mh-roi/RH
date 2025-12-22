@@ -1,0 +1,246 @@
+<p-toast></p-toast>
+<p-card>
+    <p-message
+        *ngIf="dialogErrorMessage"
+        severity="error"
+        [text]="dialogErrorMessage"
+        (onClose)="dialogErrorMessage = null"
+    ></p-message>
+    <p-message
+        *ngIf="message"
+        [severity]="message.severity"
+        [text]="message.summary"
+        (onClose)="message = null"
+    ></p-message>
+    <div class="filtre">
+        <div class="mb-3">
+            <h5 class="float-left font-bold">
+                Pointage du jour (<span class="badge badge-info">{{
+                    pointagesAgents.length
+                }}</span
+                >)
+            </h5>
+            <div class="form-actions">
+                <button
+                    pButton
+                    label="Justification"
+                    icon="pi pi-check"
+                    class="p-button-success float-right"
+                    (click)="openModalToJustififyAbsence()"
+                ></button>
+ <!--                <button
+                    pButton
+                    label="Réclamation"
+                    icon="pi pi-exclamation-triangle"
+                    class="p-button-warning float-right"
+                    id="reclamation"
+                    (click)="openModalToReclamation()"
+                ></button> -->
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div
+            class="mb-6 p-4 bg-white rounded-lg shadow-sm border border-gray-100"
+        >
+            <div
+                id="filtre"
+                class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end"
+            >
+                <!-- Filtrer par libellé -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700"
+                        >Fonction / Poste</label
+                    >
+                    <p-dropdown
+                        [options]="fonctions"
+                        [(ngModel)]="filtre.libelle"
+                        placeholder="Tous"
+                        class="w-full"
+                        optionLabel="label"
+                        [showClear]="true"
+                        [style]="{ 'min-width': '200px' }"
+                    ></p-dropdown>
+                </div>
+
+                <!-- Filtrer par statut -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700"
+                        >Statut</label
+                    >
+                    <p-dropdown
+                        [options]="statuts"
+                        [(ngModel)]="filtre.statut"
+                        placeholder="Tous"
+                        class="w-full"
+                        optionLabel="label"
+                        [showClear]="true"
+                        [style]="{ 'min-width': '200px' }"
+                    ></p-dropdown>
+                </div>
+
+                <!-- Période prédéfinie -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700"
+                        >Période</label
+                    >
+                    <p-dropdown
+                        [options]="periodes"
+                        [(ngModel)]="filtre.periode"
+                        placeholder="Sélectionner"
+                        class="w-full"
+                        optionLabel="label"
+                        (onChange)="appliquerFiltre()"
+                        [style]="{ 'min-width': '200px' }"
+                    ></p-dropdown>
+                </div>
+
+                <!-- Dates personnalisées -->
+                <div *ngIf="filtre.periode?.value" class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700"
+                        >Intervalle</label
+                    >
+                    <div class="flex gap-2">
+                        <p-calendar
+                            [(ngModel)]="filtre.dateDebut"
+                            placeholder="Date début"
+                            dateFormat="yy-mm-dd"
+                            [showIcon]="true"
+                            inputStyleClass="w-full"
+                            [style]="{ 'min-width': '150px' }"
+                        ></p-calendar>
+                        <p-calendar
+                            [(ngModel)]="filtre.dateFin"
+                            placeholder="Date fin"
+                            dateFormat="yy-mm-dd"
+                            [showIcon]="true"
+                            inputStyleClass="w-full"
+                            [style]="{ 'min-width': '150px' }"
+                        ></p-calendar>
+                    </div>
+                </div>
+
+                <!-- Bouton Appliquer -->
+                <div class="flex items-end h-full">
+                    <button
+                        pButton
+                        icon="pi pi-filter"
+                        label="Appliquer"
+                        class="buttonFilter p-button-secondary w-full md:w-auto"
+                        (click)="appliquerFiltre()"
+                    ></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-table
+        [value]="pointagesAgents"
+        [paginator]="true"
+        [rows]="recordsPerPage"
+        (onPage)="loadPage($event)"
+        [totalRecords]="pointagesAgents.length"
+        [lazy]="true"
+        (onLazyLoad)="getPointages()"
+        [globalFilterFields]="['agent.nom', 'agent.prenom', 'agent.matricule']"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Affichage {first} à {last} sur {totalRecords} résultats"
+        class="p-datatable-gridlines"
+    >
+        <!-- En-têtes -->
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Agent</th>
+                <th>Matricule</th>
+                <th>Fonction</th>
+                <th>Date</th>
+                <th>Lieu</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+
+        <!-- Corps -->
+        <ng-template pTemplate="body" let-pointage>
+            <tr>
+                <!-- Agent avec avatar et service -->
+                <td>
+                    <div class="flex align-items-center gap-2">
+                        <p-avatar
+                            icon="pi pi-user"
+                            styleClass="mr-2"
+                            size="large"
+                            shape="circle"
+                        ></p-avatar>
+                        <div>
+                            <div class="font-semibold">
+                                {{ pointage?.agentDTO?.nom }}
+                                {{ pointage?.agentDTO?.prenom }}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <!-- Matricule -->
+                <td>{{ pointage?.agentDTO?.matricule }}</td>
+
+                <!-- Fonction -->
+                <td>{{ pointage.agentDTO?.fonction?.libelle }}</td>
+                <td>
+                    {{ pointage?.dateControle }}({{ pointage?.heureControle }})
+                </td>
+                <td>{{ pointage?.lieuControle }}</td>
+
+                <!-- Statut avec badge -->
+                <td>
+                    <span
+                        class="p-tag"
+                        [ngClass]="{
+                            'p-tag-success':
+                                pointage.statutControle === 'PRESENT',
+                            'p-tag-danger':
+                                pointage.statutControle === 'ABSENT',
+                            'p-tag-warning':
+                                pointage.statutControle === 'ABSENT_JUSTIFIE',
+                        }"
+                    >
+                        {{
+                            pointage.statutControle === "PRESENT"
+                                ? "Présent"
+                                : pointage.statutControle === "ABSENT"
+                                ? "Absent"
+                                : "Absent Justifié"
+                        }}
+                    </span>
+                </td>
+
+                <!-- Actions -->
+                <td>
+                    <button
+                        pButton
+                        icon="pi pi-eye"
+                        class="p-button-rounded p-button-text p-button-info mr-2"
+                        (click)="openModalToViewPointer(pointage)"
+                    ></button>
+                    <button
+                        pButton
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text p-button-success mr-2"
+                        (click)="openModalToPointer(pointage)"
+                    ></button>
+                    <button
+                        pButton
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger"
+                        (click)="confirmerSuppression(pointage)"
+                    ></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+<!-- Dialog & Confirmation --><!-- 
+<p-confirmDialog></p-confirmDialog> -->

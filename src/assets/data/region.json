@@ -1,0 +1,22 @@
+[
+    {
+      "id" : 1,
+      "code" : "01",
+      "libelle": "CENTRE",
+      "pays": {
+        "id" : 1,
+        "code" : "01",
+        "libelle": "BURKINA FASO"
+      }
+    },
+    {
+        "id" : 2,
+        "code" : "02",
+        "libelle": "OUEST",
+        "pays": {
+          "id" : 1,
+          "code" : "01",
+          "libelle": "BURKINA FASO"
+        }
+    }
+  ]

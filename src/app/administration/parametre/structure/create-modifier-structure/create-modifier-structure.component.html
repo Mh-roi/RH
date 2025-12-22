@@ -1,0 +1,117 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+
+<ng-template pTemplate="header" style="background-color:#1e88e0; padding: 10px;">
+  <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1 mr-2"></i>
+  <h3 class="mr-auto">
+    {{structure.id ? 'Formulaire de modification' : 'Formulaire d\'ajout de'}} structure
+  </h3>
+</ng-template>
+
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+
+<form (ngSubmit)="saveEntity()" #dtf="ngForm" style="margin-top:20px;">
+  <div class="formgrid grid">
+
+    <!-- Ministère -->
+    <div class="field col-12 md:col-6">
+      <label for="ministere">Ministère :</label>
+      <p-dropdown
+        [options]="ministeres"
+        [(ngModel)]="structure.ministere"
+        (onChange)="onMinistereChange($event.value)"
+        optionLabel="libelle"
+        name="ministere"
+        inputId="ministere"
+        placeholder="Sélectionner un ministère"
+        [showClear]="true"
+        appendTo="body"
+        [filter]="true"
+        styleClass="w-full">
+      </p-dropdown>
+    </div>
+
+    <!-- Structure parente -->
+    <div class="field col-12 md:col-6">
+      <label for="parent">Structure parente :</label>
+      <p-dropdown
+        [options]="filteredStructures"
+        [(ngModel)]="structure.parent"
+        optionLabel="libelle"
+        name="parent"
+        inputId="parent"
+        placeholder="Sélectionner une structure parente"
+        [showClear]="true"
+        appendTo="body"
+        [filter]="true"
+        styleClass="w-full"
+        [disabled]="!structure.ministere">
+      </p-dropdown>
+    </div>
+
+    <!-- Code -->
+    <div class="field col-12 md:col-6">
+      <label for="code">Code :</label>
+      <input type="text" id="code" name="code" [(ngModel)]="structure.code" required
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div>
+
+    <!-- Libellé -->
+    <div class="field col-12 md:col-6">
+      <label for="libelle">Libellé :</label>
+      <input type="text" id="libelle" name="libelle" [(ngModel)]="structure.libelle" required
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div>
+
+    <!-- Sigle -->
+    <div class="field col-12 md:col-6">
+      <label for="sigle">Sigle :</label>
+      <input type="text" id="sigle" name="sigle" [(ngModel)]="structure.sigle"
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div>
+
+    <!-- Matricule Responsable -->
+   <!--  <div class="field col-12 md:col-6">
+      <label for="matriculeResponsable">Matricule Responsable :</label>
+      <input type="text" id="matriculeResponsable" name="matriculeResponsable"
+             [(ngModel)]="structure.matriculeResponsable"
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div> -->
+
+    <!-- Nom Responsable -->
+    <div class="field col-12 md:col-6">
+      <label for="nomResponsable">Nom du Responsable :</label>
+      <input type="text" id="nomResponsable" name="nomResponsable"
+             [(ngModel)]="structure.nomResponsable"
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div>
+
+    <!-- Prénom Responsable -->
+    <div class="field col-12 md:col-6">
+      <label for="prenomResponsable">Prénom du Responsable :</label>
+      <input type="text" id="prenomResponsable" name="prenomResponsable"
+             [(ngModel)]="structure.prenomResponsable"
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div>
+
+    <!-- Niveau Structure -->
+    <div class="field col-12 md:col-6">
+      <label for="niveauStructure">Niveau Structure :</label>
+      <input type="text" id="niveauStructure" name="niveauStructure"
+             [(ngModel)]="structure.niveauStructure"
+             class="text-base p-2 border-1 surface-border border-round w-full" />
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="text-right mt-4">
+    <button type="reset" label="Effacer" class="p-button-filter mr-3 float-left" pButton icon="pi pi-trash"></button>
+    <button type="button" label="Annuler" (click)="clear()" class="p-button-filter mr-3" pButton icon="pi pi-times"></button>
+    <button type="submit" [disabled]="!dtf.form.valid"
+            label="{{isEditing() ? 'Enregistrer' : 'Ajouter'}}"
+            icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+            class="{{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+    </button>
+  </div>
+</form>

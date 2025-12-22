@@ -1,0 +1,80 @@
+<p-card>
+
+    <h6 class="text-bold">Filtre</h6>
+    <hr />
+    <form name="editFormF" role="form" novalidate #editFormF="ngForm">
+      <div class="row justify-content-center">
+        <div class="form-group col-md-4 ">
+        </div>
+        <div class="form-group col-md-4 ">
+          <input type="text" pInputText [(ngModel)]="filtreLibelle" class="form-control form-control-sm" name="filterText"
+            id="filterText" placeholder="Filtrer par type periode" required />
+        </div>
+  
+        <div class="form-group col-md-2">
+          <button pButton label="Filtrer" icon="pi pi-search"
+            class="btn btn-sm btn-info float-right mb-2 p-button-info mr-2" [disabled]="!enableCreate" style="width: 100%"
+            [disabled]="editFormF.form.invalid" (click)="filtrer()" ngbTooltip="Appliquer le filtre">
+          </button>
+        </div>
+        <div class="form-group col-md-2">
+          <button type="button" class="btn btn-sm btn-warning" style="width: 100%" [disabled]="!filtreLibelle"
+            (click)="resetFilter()" ngbTooltip="Annuler le filtre">
+            Rénitialiser
+          </button>
+        </div>
+      </div>
+    </form>
+    <div>
+      <h6 class="float-left">Résultats trouvés : <span class="text-danger">{{totalRecords}}</span></h6>
+      <div class="p-d-flex">
+
+        
+        <app-crud-toolbar [enableCreate]="enableCreate" (create)="openModalCreate()" [enableEdit]="enableBtnEdit"
+          (edit)="openModalEdit(periode)">
+        </app-crud-toolbar>
+        <div class="p-ml-auto">
+          <p-message *ngIf="dialogErrorMessage" severity="error" [text]="dialogErrorMessage"></p-message>
+          <p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+          <p-progressSpinner *ngIf="isOpInProgress" strokeWidth="4" [style]="{width: '50px', height: '50px'}">
+          </p-progressSpinner>
+        </div>
+      </div>
+    </div>
+    <p-table #dtf [value]="periodes" [paginator]="true" [rows]="recordsPerPage" (onPage)="loadPage($event)"
+      [totalRecords]="totalRecords" (onLazyLoad)="loadAll()" [lazy]="true"
+      [globalFilterFields]="['dateDebut','ministere.libelle']"
+      currentPageReportTemplate="Affichage {first} à {last} de {totalRecords} élements" [showCurrentPageReport]=true
+      [rowsPerPageOptions]="[20, 50, 100, 500]" styleClass="p-datatable-gridlines">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+        
+          <th pSortableColumn="dateDebut">DateDebut<p-sortIcon field="dateDebut"></p-sortIcon></th>
+          <th pSortableColumn="dateFin">DateFin<p-sortIcon field="dateFin"></p-sortIcon></th>
+          <th pSortableColumn="periodType">PeriodType<p-sortIcon field="periodType"></p-sortIcon></th>
+          <th pSortableColumn="ministere.libelle">Ministere<p-sortIcon field="ministere.libelle"></p-sortIcon></th>
+          <th class="actionsStyle">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-periode>
+        <tr>
+  
+          <td>{{ periode.dateDebut }}</td>
+          <td>{{ periode.dateFin }}</td>
+          <td>{{ periode.periodType }}</td>
+          <td>{{ periode.ministereInstitution ? periode.ministereInstitution!.libelle : '-' }}</td>
+  
+          <td class="actionsStyle">
+            <app-actions-toolbar-iud [enableBtnInfo]="enableBtnInfo" (info)="openModalDetail(periode)"
+              [enableBtnInfo]="enableBtnInfo" (edit)="openModalEdit(periode)" [enableBtnEdit]="enableBtnEdit"
+              (delete)="onDelete(periode)" [enableBtnDelete]="enableBtnDelete">
+            </app-actions-toolbar-iud>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  
+  
+    <!-- Confirmation -->
+    <app-confirmation></app-confirmation>
+  </p-card>

@@ -1,0 +1,11 @@
+export enum Authority {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  AGENT = 'AGENT',
+  DRH = 'DRH',
+  SUPERIEUR = 'SUPERIEUR',
+  SAISIE = 'SAISIE',
+  CONSULTATION = 'CONSULTATION',
+  MANAGER ="MANAGER",
+}
+  

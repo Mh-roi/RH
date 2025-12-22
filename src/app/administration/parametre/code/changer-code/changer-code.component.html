@@ -1,0 +1,51 @@
+
+<div class="mt-4 mb-4">
+    <p-card header="Générer un code d'affiliation" [style]="{width: 'default', background:'#F3FFFF'}" styleClass="p-card-shadow" class="content-center">
+        <div class="p-error" *ngIf="!saveSuccess">{{message}}</div>
+    
+        <br>
+    
+        <p-button label="Générer mon code d'affiliation" *ngIf= "!fonctionnaire" icon="pi pi-check" (click)="genererCodeAffiliation()"></p-button>
+        <br>
+        <br>
+        <div class="p-success" *ngIf="saveSuccess" style="color: forestgreen;"><h3>{{message}}</h3></div>
+        <br>
+        <div class="p-field" *ngIf= "fonctionnaire">
+            <label for="codeGenere"><h1>{{fonctionnaire.codeGenere}}</h1></label>
+        </div>
+        <div>
+            <p-button label="Changer mon code" *ngIf="codePresent" (click)="openNew()"></p-button>
+        </div>
+    <br>
+    <br>
+    </p-card>
+    </div>
+    <p-dialog [(visible)]="showDialog" [style]="{width: '450px'}"  [modal]="true" styleClass="p-fluid">
+        
+        <!--Entete du pop-up d'enregistrement d'une fiche de poste-->
+        <ng-template pTemplate="header">
+            <span class="p-mr-auto">
+                En changeant de code, vous serez deconnecté de tous vos agents.
+            </span>
+        </ng-template>
+          <p-divider></p-divider>
+          
+          <!-- Form -->
+        <form (ngSubmit)="changerCodeAffiliation()" #dtf="ngForm">
+    
+            <div class="p-field-checkbox">
+                <input class="p-checkbox" type="checkbox" id="checked" [(ngModel)]="checked" name="checked" value="true">
+                <label for="checked">Etes-vous sûr de vouloir changer de code ?</label>
+            </div>
+    
+            <div class="p-field" *ngIf="checked">
+                <p-button type="submit" [disabled]="!dtf.form.valid" label="Confirmer" icon="pi pi-check"
+                class="p-button-raised p-button-text p-button-primary"></p-button>
+                <p-button type="reset" label="Annuler" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
+            </div>
+            <div class="p-success" *ngIf="saveSuccess"><h5>{{message1}}</h5></div>
+        </form>
+    </p-dialog>
+    <p-confirmDialog ></p-confirmDialog>
+    
+    

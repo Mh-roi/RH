@@ -1,0 +1,77 @@
+[
+    {
+      "id" : 1,
+      "code" : "GHGHC",
+      "libelle": "Secteur 1",
+      "arrondissement": {
+        "id" : 1,
+        "code" : "GHGHC",
+        "libelle": "Arrondissement 1",
+        "commune": {
+          "id" : 1,
+          "code" : "GHGHC",
+          "libelle": "Commune 1",
+          "province": {
+            "id" : 1,
+            "code" : "GHGH",
+            "libelle": "Province 1",
+            "region": {
+              "id": 1,
+              "code": "GHGHG",
+              "libelle": "Région 1"
+            } 
+          }
+        }
+      }
+    },
+    {
+        "id" : 2,
+        "code" : "GHGHC1",
+        "libelle": "Secteur 2",
+        "arrondissement": {
+          "id" : 1,
+          "code" : "GHGHC",
+          "libelle": "Arrondissement 1",
+          "commune": {
+            "id" : 1,
+            "code" : "GHGHC",
+            "libelle": "Commune 1",
+            "province": {
+              "id" : 1,
+              "code" : "GHGH",
+              "libelle": "Province 1",
+              "region": {
+                "id": 1,
+                "code": "GHGHG",
+                "libelle": "Région 1"
+              } 
+            }
+          }
+        }
+    },
+    {
+        "id" : 3,
+        "code" : "GHGHC3",
+        "libelle": "Secteur 3",
+        "arrondissement": {
+          "id" : 1,
+          "code" : "GHGHC",
+          "libelle": "Arrondissement 1",
+          "commune": {
+            "id" : 1,
+            "code" : "GHGHC",
+            "libelle": "Commune 1",
+            "province": {
+              "id" : 1,
+              "code" : "GHGH",
+              "libelle": "Province 1",
+              "region": {
+                "id": 1,
+                "code": "GHGHG",
+                "libelle": "Région 1"
+              } 
+            }
+          }
+        }
+    }
+  ]

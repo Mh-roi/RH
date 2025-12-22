@@ -1,0 +1,23 @@
+[
+    {
+      "id" : 1,
+      "code" : "TP01",
+      "libelle": "Type piece 1"
+    },
+    {
+        "id" : 2,
+        "code" : "TP02",
+        "libelle": "Type piece 2"
+      },
+      {
+        "id" : 3,
+        "code" : "TP03",
+        "libelle": "Type piece 3"
+      },
+      {
+        "id" : 4,
+        "code" : "TP04",
+        "libelle": "Type piece 4"
+      }
+
+  ]

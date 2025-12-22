@@ -1,0 +1,15 @@
+[
+    {
+      "id" : 1,
+      "code" : "BA",
+      "libelle": "Banque / Assurance",
+      "emploi": [
+          {"id": 1,"libelle": "Administrateur de base de données", "code": "0001"},
+          {"id": 2,"libelle": "Assistant éducation", "code": "0002"}
+      ],
+        "profession": [
+            {"id": 1,"libelle": "Pilote et ingénieur de la navigation aérienne", "code": "0001"},
+            {"id": 2,"libelle": "Cadre supérieur et technicien de l’équipement rural", "code": "0002"}
+        ]
+    }
+  ]

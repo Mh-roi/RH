@@ -1,0 +1,353 @@
+<div>
+    <p-card>
+        <p-toast></p-toast>
+    </p-card>
+</div>
+
+<!-- <div class="d-flex justify-content-end mb-3">
+  <button pButton label="Nouveau agent" icon="pi pi-plus" class="btn btn-sm btn-success btn-lg mr-2" (click)="openModalCreateAgent()"></button>
+</div> -->
+
+<p-card>
+    <hr />
+    <form name="editFormF" role="form" novalidate #editFormF="ngForm">
+        <h6 class="text-bold">Filtre</h6>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-4">
+                <input
+                    type="text"
+                    pInputText
+                    [(ngModel)]="filtreLibelle"
+                    class="form-control form-control-sm"
+                    name="filterText"
+                    id="filterText"
+                    placeholder="Filtrer par libelle"
+                    required
+                />
+            </div>
+
+            <div class="form-group col-md-2">
+                <button
+                    pButton
+                    label="Filtrer"
+                    icon="pi pi-search"
+                    class="btn btn-sm btn-info float-right mb-2 p-button-info mr-2"
+                    [disabled]="!enableCreate"
+                    style="width: 100%"
+                    [disabled]="editFormF.form.invalid"
+                    (click)="filtrer()"
+                    ngbTooltip="Appliquer le filtre"
+                ></button>
+            </div>
+            <div class="form-group col-md-2">
+                <button
+                    type="button"
+                    class="btn btn-sm btn-warning"
+                    style="width: 100%"
+                    [disabled]="!filtreLibelle"
+                    (click)="resetFilter()"
+                    ngbTooltip="Annuler le filtre"
+                >
+                    Rénitialiser
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex justify-content-end mb-3">
+        <button
+            pButton
+            type="button"
+            label="Enroler agent"
+            icon="pi pi-plus"
+            class="btn btn-success btn-lg"
+            (click)="openModalCreateAgent()"
+        ></button>
+    </div>
+
+    <div>
+        <h6 class="float-left">
+            Résultats trouvés :
+            <span class="text-danger">{{ totalRecords }}</span>
+        </h6>
+        <br /><br />
+        <div class="p-d-flex">
+            <app-crud-toolbar
+                [enableListe]="enableListe"
+                (create)="voirPointages()"
+            ></app-crud-toolbar>
+
+            <div class="p-ml-auto">
+                <p-message
+                    *ngIf="dialogErrorMessage"
+                    severity="error"
+                    [text]="dialogErrorMessage"
+                ></p-message>
+                <p-message
+                    *ngIf="message"
+                    [severity]="message.severity"
+                    [text]="message.summary"
+                ></p-message>
+                <p-progressSpinner
+                    *ngIf="isOpInProgress"
+                    strokeWidth="4"
+                    [style]="{ width: '50px', height: '50px' }"
+                >
+                </p-progressSpinner>
+            </div>
+        </div>
+    </div>
+
+    <p-table
+        #dtf
+        [value]="agents"
+        [paginator]="true"
+        [rows]="recordsPerPage"
+        (onPage)="loadPage($event)"
+        [totalRecords]="totalRecords"
+        (onLazyLoad)="load()"
+        [lazy]="true"
+        [globalFilterFields]="['matricule', 'nom', 'prenom']"
+        currentPageReportTemplate="Affichage {first} à {last} de {totalRecords} élements"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[20, 50, 100, 500]"
+        styleClass="p-datatable-gridlines"
+    >
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th pSortableColumn="matricule">
+                    Matricule<p-sortIcon field="matricule"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nom">
+                    Nom<p-sortIcon field="nom"></p-sortIcon>
+                </th>
+                <th pSortableColumn="prenom">
+                    Prénom<p-sortIcon field="prenom"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="fonction">
+                    Fonction<p-sortIcon field="fonction"></p-sortIcon>
+                </th>
+                <th pSortableColumn="point_journalier">
+                    pointage journalier<p-sortIcon
+                        field="point_journalier"
+                    ></p-sortIcon>
+                </th>
+                <!-- <th pSortableColumn="note-courante">Note courante<p-sortIcon field="note-courante"></p-sortIcon></th> -->
+                <th class="actionsStyle">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-agent let i="index">
+            <tr>
+                <td>{{ agent.matricule }}</td>
+                <td>{{ agent.nom }}</td>
+                <td>{{ agent.prenom }}</td>
+                <td>
+                    {{ agent.fonction ? agent.fonction!.libelle : "-" }}
+                </td>
+                <td>
+                    <span class="text-success" *ngIf="agent.isPointed"
+                        >pointé</span
+                    >
+                    <span class="text-warning" *ngIf="!agent.isPointed"
+                        >non pointé</span
+                    >
+                </td> 
+                <!-- <td>{{noteC ? noteC.noteGlobale : 'Pas encore noté'}}</td> -->
+                <td class="actionsStyle">
+                    <app-actions-toolbar-iud
+                        [enableBtnInfo]="enableBtnInfo"
+                        (info)="openModalDetail(agent)"
+                        [enableBtnInfo]="enableBtnInfo"
+                        (pointer)="openModalToPointer(agent)"
+                        [enableBtnPointer]="enableBtnPointer"
+                        (rejeter)="onRejeter(agent)"
+                        [enableBtnRejeter]="enableBtnRejeter"
+                    >
+                    </app-actions-toolbar-iud>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+<!-- Dialog-->
+<p-dialog
+    [(visible)]="showDialog"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+    [style]="{ width: '60vw' }"
+>
+    <ng-template pTemplate="header">
+        <i class="pi-pencil pi p-mr-1"></i>
+        <span class="p-mr-auto">
+            <h4>Evaluer l'agent "matricule : {{ agent.matricule }}"</h4>
+        </span>
+    </ng-template>
+
+    <p-divider></p-divider>
+
+    <form [formGroup]="dynamicForm" (ngSubmit)="save()">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <span class="ui-float-label">
+                        <input
+                            formControlName="idFonctionnaire"
+                            id="float-input"
+                            type="hidden"
+                            size="30"
+                            pInputText
+                        />
+                    </span>
+                </div>
+                <div class="row mt-3">
+                    <div
+                        class="col-sm-4"
+                        *ngFor="let critere of critereGroup; let i = index"
+                    >
+                        <div [formGroup]="critere">
+                            <span class="ui-float-label">
+                                <input
+                                    formControlName="id"
+                                    id="float-input"
+                                    type="hidden"
+                                    size="30"
+                                    pInputText
+                                />
+                            </span>
+                            <span class="ui-float-label">
+                                <label
+                                    class="style-label pb-5"
+                                    for="float-input"
+                                    >{{ listcriteres[i].libelle }} (/{{
+                                        listcriteres[i].ponderation
+                                    }}
+                                    )</label
+                                >
+                                <input
+                                    formControlName="note"
+                                    id="float-input"
+                                    type="number"
+                                    pInputText
+                                    [min]="0"
+                                    max="{{ listcriteres[i].ponderation }}"
+                                />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3 mx-auto">
+                    <div class="field col-sm-6">
+                        <label for="tauxActivite"
+                            >Taux de réalisation des activités :</label
+                        >
+                        <input
+                            type="number"
+                            id="tauxActivite"
+                            formControlName="tauxActivite"
+                            required
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="annee">Année :</label>
+                        <div>
+                            <p-dropdown
+                                autoWidth="false"
+                                styleClass="mb-3"
+                                [style]="{ width: '100%' }"
+                                [options]="years"
+                                formControlName="annee"
+                                inputId="annee"
+                                [required]="true"
+                                placeholder="Selectionner l'année..."
+                                [filter]="true"
+                                appendTo="body"
+                                [showClear]="true"
+                            >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-4">
+                        <span class="ui-float-label">
+                            <label class="style-label" for="float-input"
+                                >Observations du supérieur hiérarchique</label
+                            >
+                            <textarea
+                                formControlName="observation"
+                                id="float-input"
+                                rows="3"
+                                pInputTextarea
+                            ></textarea>
+                        </span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="ui-float-label">
+                            <label class="style-label" for="float-input"
+                                >Contraintes de réalisation relevées</label
+                            >
+                            <textarea
+                                formControlName="contraintesRealisation"
+                                id="float-input"
+                                rows="3"
+                                pInputTextarea
+                            ></textarea>
+                        </span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="ui-float-label">
+                            <label for="float-input" class="style-label"
+                                >Points de divergence (s’il y a lieu)</label
+                            >
+                            <textarea
+                                formControlName="pointDivergeance"
+                                id="float-input"
+                                rows="3"
+                                pInputTextarea
+                            ></textarea>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <p-divider></p-divider>
+
+            <div class="p-ml-auto text-right">
+                <button
+                    type="submit"
+                    label="Enregistrer"
+                    value="save"
+                    icon="pi pi-plus"
+                    class="p-button-raised p-button-text"
+                    pButton
+                ></button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+<!-- Confirmation -->
+<!-- <app-confirmation></app-confirmation> -->
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-question">
+    <ng-template pTemplate="footer">
+        <button
+            label="Non, j'annule"
+            (click)="cd.reject()"
+            pButton
+            type="button"
+            icon="pi pi-times"
+            class="p-button-danger p-button-raised p-mr-3"
+        ></button>
+        <button
+            label="Oui, je confirme"
+            (click)="cd.accept()"
+            pButton
+            type="button"
+            icon="pi pi-check"
+            class="p-button-success p-button-raised p-mr-3"
+        ></button>
+    </ng-template>
+</p-confirmDialog>

@@ -1,0 +1,47 @@
+[
+    {
+      "id" : 1,
+      "code" : "GHGHC",
+      "libelle": "Commune 1",
+      "province": {
+        "id" : 1,
+        "code" : "GHGH",
+        "libelle": "Province 1",
+        "region": {
+          "id": 1,
+          "code": "GHGHG",
+          "libelle": "Région 1"
+        } 
+      }
+    },
+    {
+        "id" : 2,
+        "code" : "GHGHC1",
+        "libelle": "Commune 2",
+        "province": {
+          "id" : 2,
+          "code" : "GHGH",
+          "libelle": "Province 2",
+          "region": {
+            "id": 1,
+            "code": "GHGHG",
+            "libelle": "Région 1"
+          } 
+        }
+    },
+    {
+        "id" : 3,
+        "code" : "GHGHC3",
+        "libelle": "Commune 3",
+        "province": {
+          "id" : 1,
+          "code" : "GHGH",
+          "libelle": "Province 1",
+          "region": {
+            "id": 1,
+            "code": "GHGHG",
+            "libelle": "Région 1"
+          } 
+        }
+    }
+  ]

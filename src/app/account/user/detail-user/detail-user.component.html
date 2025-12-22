@@ -1,0 +1,29 @@
+<ng-template pTemplate="header">
+    <span class="p-mr-auto"> <b>DETAILS UTILISATEUR</b></span>
+</ng-template>
+<p-divider></p-divider>
+<div class="row">
+        <div class="col-md-12">
+            <table class="table table-sm table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <th>Nom </th>
+                        <td>: {{ user.nom}}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>: {{ user.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telephone</th>
+                        <td>: {{ user.telephone }}</td>
+                    </tr>
+            </table>
+        </div>
+
+</div>
+<p-divider></p-divider>
+<div class="p-ml-auto text-right">
+    <button description="reset" label="Fermer" (click)="clear()"
+        class="p-button-raised p-button-danger mr-2" pButton></button>
+</div>

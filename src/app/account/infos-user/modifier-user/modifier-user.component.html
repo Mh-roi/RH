@@ -1,0 +1,61 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+<!-- <p-divider></p-divider> -->
+<ng-template pTemplate="header" style="
+    background-color:#1e88e0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;">
+    <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1 mr-2"></i>
+    <h3 class="mr-auto">
+        {{user.id ? 'Formulaire de modification' : 'Formulaire d\'ajout de'}} user
+    </h3>
+</ng-template>
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+<!-- <p-message severity="info" text="Message Content"></p-message> -->
+<!-- Form -->
+<form (ngSubmit)="updateEntity()" #dtf="ngForm" style="margin-top:20px;">
+
+    <!--  -->
+
+    <div class="formgrid grid">
+       
+        <div class="field col-12 md:col-12">
+            <label for="libelle">Nom :</label>
+            <input type="text" id="nom" name="nom" #nom="ngModel" [(ngModel)]="user.nom" required
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 md:col-12">
+            <label for="libelle">Prenom :</label>
+            <input type="text" id="prenom" name="prenom" #prenom="ngModel" [(ngModel)]="user.prenom" required
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 md:col-12">
+            <label for="telephone">Telephone :</label>
+            <input type="text" id="telephone" name="telephone" #telephone="ngModel" [(ngModel)]="user.telephone" required
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 md:col-12">
+            <label for="libelle">Email :</label>
+            <input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required
+                class="form-control form-control-sm" name="mail"
+                pattern="[^@]+@[^\.]+\..+" 
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+
+    </div>
+    <!-- <p-divider></p-divider> -->
+    <div class="p-ml-auto text-right ">
+        <div class="p-ml-auto text-right">
+            <!-- <button type="reset" label="Effacer" class="p-button-filter mr-3 float-left" pButton
+                icon="pi pi-trash"></button> -->
+            <button label="Annuler" (click)="clear()" class="p-button-filter mr-3" pButton icon="pi pi-times"></button>
+            <button type="save" [disabled]="!dtf.form.valid" label="{{isEditing() ? 'Enregistrer' : 'Enregistrer'}}"
+                icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}"
+                class="  {{isEditing() ? 'p-button-primary' : 'p-button-success'}}" pButton>
+            </button>
+        </div>
+    </div>
+</form>

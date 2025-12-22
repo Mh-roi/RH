@@ -1,0 +1,287 @@
+<div>
+  <div class="header text-center">
+    <h5 class="modal-title" id="usectionModal">Création de mon compte</h5>
+  </div>
+  <p-card>
+    <div style="max-width: 60vw; margin: auto">
+      <div class="p-mb-2"></div>
+
+      <div class="alert alert-warning" *ngIf="countIscreated">
+        Votre compte existe déjà ! Veuillez cliquer sur
+        <a class="btn btn-info" href="/activation-compte"> ce lien</a>
+        pour activer votre compte
+      </div>
+
+      <!-- Formulaire -->
+      <div>
+        <form
+          *ngIf="!isSuccessful"
+          name="form"
+          (ngSubmit)="f.form.valid && registerCompte()"
+          #f="ngForm"
+          novalidate
+        >
+          <!-- Messages -->
+          <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isFailed">
+            Échec de création du compte: {{ errorMessage }}
+          </div>
+
+          <div class="alert alert-danger" role="alert" *ngIf="notFound">
+            {{ notFoundMessage }}
+          </div>
+
+          <div class="alert alert-danger" role="alert" *ngIf="echec">
+            {{ infoMessage }}
+          </div>
+
+          <div class="alert alert-success" role="alert" *ngIf="success">
+            {{ infoMessage }}
+          </div>
+
+          <!-- Matricule -->
+          <div class="formgrid grid">
+            <div class="row col-12 mb-2">
+              <div class="col-12">
+                <label for="matricule">Matricule</label>
+              </div>
+              <div class="row col-12" style="align-items: center">
+                <div class="col-12 md:col-4" style="align-items: center">
+                  <input
+                    id="matricule"
+                    name="matricule"
+                    #matricule="ngModel"
+                    [(ngModel)]="matriculeRecherche"
+                    pInputText
+                    required
+                    placeholder="Entrez votre matricule"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  />
+                </div>
+                <div class="col-12 md:col-3" style="align-items: center">
+                  <button
+                    pButton
+                    label="Vérifier"
+                    icon="pi pi-search"
+                    class="col-12 md:col-6"
+                    style="
+                      align-items: center;
+                      margin-top: 0.5rem;
+                      margin-left: 1rem;
+                      padding: 0.5rem;
+                      background-color: #fcd116;
+                    "
+                    type="button"
+                    [disabled]="!matricule.valid"
+                    (click)="searchAgentByMatricule()"
+                    ngbTooltip="Effectuer la recherche de l'agent"
+                  ></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formulaire affiché après recherche -->
+            <div class="forssm" *ngIf="afficherForm">
+              <div class="row col-12 mb-2">
+                <div class="col-4 md:col-4 p-2">
+                  <label for="nom">Nom :</label>
+                  <input
+                    type="text"
+                    id="nom"
+                    name="nom"
+                    [(ngModel)]="agent.nom"
+                    disabled
+                    class="text-base text-color surface-overlay border-none font-weight-bold w-full"
+                  />
+                </div>
+
+                <div class="col-4 md:col-4 p-2">
+                  <label for="prenom">Prénom(s) :</label>
+                  <input
+                    type="text"
+                    id="prenom"
+                    name="prenom"
+                    [(ngModel)]="agent.prenom"
+                    readonly
+                    class="text-base text-color surface-overlay border-none font-weight-bold w-full"
+                  />
+                </div>
+
+                <div class="col-4 md:col-4 p-2">
+                  <label for="sexe">Sexe :</label>
+                  <input
+                    type="text"
+                    id="sexe"
+                    name="sexe"
+                    [(ngModel)]="agent.sexe"
+                    readonly
+                    class="text-base text-color surface-overlay border-none font-weight-bold w-full"
+                  />
+                </div>
+              </div>
+
+              <!-- Structure / Emploi / Fonction -->
+              <div class="row col-12 mb-2">
+                <!-- Structure -->
+                <div class="col-12 md:col-6 mt-2">
+                  <label for="structure">Structure :</label>
+                  <div *ngIf="agent.structure">
+                    <span class="text-success">{{ agent.structure.libelle }}</span>
+                  </div>
+                  <p-dropdown
+                    *ngIf="!agent.structure"
+                    id="structure"
+                    [options]="structures"
+                    optionLabel="libelle"
+                    [(ngModel)]="agent.structure"
+                    name="structure"
+                    placeholder="Sélectionner une structure"
+                    [filter]="true"
+                    filterPlaceholder="Rechercher..."
+                    class="w-full"
+                  >
+                  </p-dropdown>
+                </div>
+
+                <!-- Emploi -->
+                <div class="col-12 md:col-6 mt-2">
+                  <label for="emploi">Emploi :</label>
+                  <p-dropdown
+                    id="emploi"
+                    [options]="emplois"
+                    optionLabel="libelle"
+                    [(ngModel)]="agent.emploi"
+                    name="emploi"
+                    placeholder="Sélectionner un emploi"
+                    [filter]="true"
+                    filterPlaceholder="Rechercher..."
+                    class="w-full"
+                  >
+                  </p-dropdown>
+                </div>
+
+                <!-- Fonction -->
+                <div class="col-12 md:col-6 mt-2">
+                  <label for="fonction">Fonction :</label>
+                  <p-dropdown
+                    id="fonction"
+                    [options]="fonctions"
+                    optionLabel="libelle"
+                    [(ngModel)]="agent.fonction"
+                    name="fonction"
+                    placeholder="Sélectionner une fonction"
+                    [filter]="true"
+                    filterPlaceholder="Rechercher..."
+                    class="w-full"
+                  >
+                  </p-dropdown>
+                </div>
+              </div>
+
+              <!-- Téléphone et Email -->
+              <div class="row col-12">
+                <div class="field col-12 md:col-6">
+                  <label for="telephone">Téléphone :</label>
+                  <p-inputMask
+                    id="telephone"
+                    name="telephone"
+                    #telephone="ngModel"
+                    [(ngModel)]="agent.telephone"
+                    type="tel"
+                    [required]="true"
+                    mask="(+226) 99999999"
+                    autoWidth="false"
+                    [style]="{ width: '100%' }"
+                  ></p-inputMask>
+                </div>
+
+                <div class="col-12 md:col-6">
+                  <label for="emailAddress">Email :</label>
+                  <input
+                    id="emailAddress"
+                    type="email"
+                    name="emailAddress"
+                    #emailAddress="ngModel"
+                    [(ngModel)]="agent.email"
+                    pInputText
+                    required
+                    style="margin-right: 0.5rem; color: #f39c12"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  />
+                </div>
+              </div>
+
+              <!-- Mot de passe -->
+              <div class="row col-12">
+                <div class="col-12 md:col-6">
+                  <label for="password" class="w-full">Entrer le mot de passe :</label>
+                  <p-password
+                    id="password"
+                    name="password"
+                    #password="ngModel"
+                    [(ngModel)]="agent.password"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    [minlength]="8"
+                    required
+                  >
+                  </p-password>
+                </div>
+
+                <div class="col-12 md:col-6">
+                  <label for="pwd-confirmation" class="w-full">Confirmer le mot de passe :</label>
+                  <p-password
+                    id="pwd-confirmation"
+                    name="pwd-confirmation"
+                    #confirmation="ngModel"
+                    [(ngModel)]="pwdConfirmation"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    [minlength]="8"
+                    required
+                  >
+                  </p-password>
+                </div>
+
+                <!-- Validations -->
+                <div class="p-error" *ngIf="confirmation.invalid && (confirmation.dirty || confirmation.touched)">
+                  <span>Veillez renseigner la confirmation du mot de passe</span>
+                </div>
+                <div class="p-error" *ngIf="(password.dirty || password.touched) && password.errors?.['minlength']">
+                  <span>Le mot de passe doit contenir au moins 8 caractères</span>
+                </div>
+                <div
+                  class="p-error"
+                  *ngIf="(confirmation.dirty || confirmation.touched) && agent.password !== pwdConfirmation"
+                >
+                  <span>Les mots de passe ne sont pas les mêmes</span>
+                </div>
+              </div>
+
+              <p-divider></p-divider>
+
+              <!-- Boutons -->
+              <div class="button-section">
+                <button type="reset" class="btn-reset">
+                  <i class="fas fa-times-circle"></i> Effacer
+                </button>
+                <button
+                  id="bt"
+                  type="submit"
+                  class="btn-create"
+                  [disabled]="f.form.invalid || agent.password !== pwdConfirmation || !agent.telephone"
+                >
+                  <i class="fas fa-user-plus" style="margin-right: 0.5rem"></i>
+                  Création
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="alert alert-success" *ngIf="isSuccessful && !countIscreated">
+          Votre compte a été créé avec succès !
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>

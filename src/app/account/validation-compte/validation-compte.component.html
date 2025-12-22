@@ -1,0 +1,55 @@
+<img src="assets/img/icons/conexion1.png" class="fixed left-0 top-0 min-h-screen min-w-screen"
+    style="margin-left:0px;width: 100%;">
+<div class="px-5 min-h-screen flex justify-content-center align-items-center" style="">
+    <div class="border-1 surface-border surface-card border-round z-1 bg-green">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="login-pf-header"
+                    style="margin-left:30px;margin-right:30px;margin-bottom: -30px;padding-top:10px;">
+                    <div class="logo" style="">
+                        <img src="assets/img/3.png" alt="logo" height="150" width="150">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-30 bg-green"
+            style="margin-left:0px;margin-right:0px;padding-left: 30px;padding-right: 30px;background-color: #eaeaea;padding-bottom:50px;padding-top: 50px;">
+            <div class="col-md-12">
+                <!-- <div class="mb-4">
+                    <div class="text-900 text-xl font-bold mb-2">Se connecter</div>
+                    <span class="text-600 font-medium">Entrez votre email et votre mot de passe</span>
+                </div> -->
+                <form (ngSubmit)="validationCompte()" #dtf="ngForm" style="margin-top:20px;">
+                    <div class="flex flex-column">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-envelope"></i>
+                            <input autofocus id="password" type="password" name="password" [(ngModel)]="validatrionCompte.password"
+                                #password="ngModel" required pInputText class="w-full md:w-25rem" placeholder="Mot de passe">
+                        </span>
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-lock"></i>
+                            <input autofocus id="confirmePassword" name="confirmePassword" [(ngModel)]="validatrionCompte.confirmePassword"
+                                #confirmePassword="ngModel" type="password" pInputText class="w-full md:w-25rem"
+                                placeholder="Confirmer le mot de passe" required>
+                        </span>
+                        <!-- <div class="mb-4 flex flex-wrap gap-3">
+                            <div>
+                                <p-checkbox name="checkbox" value="val" label="Se souvenir"
+                                    [(ngModel)]="account.rememberMe" styleClass="mr-2" [binary]="true">
+                                </p-checkbox>
+                               
+                            </div>
+                            <a [routerLink]="['/mot-de-passe-oublier']"
+                                class="text-600 cursor-pointer hover:text-primary cursor-pointer ml-auto transition-colors transition-duration-300 text-dark">Mot
+                                de passe oublié?</a>
+                        </div> -->
+                        <button pButton pRipple type="submit" [disabled]="!dtf.form.valid" label="Soumettre"
+                            [routerLink]="['/admin']" class="w-full btn-primary" pButton>
+                        </button>
+                        <!-- <button pButton pRipple label="Connexion" class="w-full btn-primary" [routerLink]="['/admin']"></button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

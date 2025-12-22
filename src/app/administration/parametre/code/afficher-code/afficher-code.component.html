@@ -1,0 +1,19 @@
+<br>
+<p-card header="Mon code d'affiliation" [style]="{width: 'default', background:'#F3FFFF'}" styleClass="p-card-shadow" class="content-center">
+    <div class="p-error" *ngIf="!saveSuccess">{{message}}</div>
+
+    <br>
+    <p-button label="Voir mon code d'affiliation" *ngIf="fonctionnaire" icon="pi pi-check" (click)="afficherMonCode()"></p-button>
+    <br>
+    <br>
+    <div class="p-field" *ngIf= "code">
+        <label for="codeGenere"><h1 style="color: black; font-weight: bolder;">{{fonctionnaire.codeGenere}}</h1></label>
+    </div>
+    <div class="p-field" *ngIf= "!code">
+        <div class="p-info" style="color: forestgreen;"><h3>{{message}}</h3></div>
+    </div>
+<br>
+<br>
+<br>
+</p-card>
+<br>

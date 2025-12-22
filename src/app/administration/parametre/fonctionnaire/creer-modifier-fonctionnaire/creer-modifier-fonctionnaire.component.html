@@ -1,0 +1,343 @@
+<p-confirmDialog></p-confirmDialog>
+
+<ng-template pTemplate="header" class="bg-primary p-3 text-white">
+    <i class="{{ isEditing() ? 'pi pi-pencil' : 'pi pi-plus' }} mr-2"></i>
+    <h3 class="inline">
+        {{ fonctionnaire.id ? "Modifier un agent" : "Ajouter un agent" }}
+    </h3>
+</ng-template>
+
+<p-progressBar
+    *ngIf="isDialogOpInProgress"
+    mode="indeterminate"
+    color="#1e88e0"
+></p-progressBar>
+
+<p-message
+    *ngIf="message"
+    [severity]="message.severity"
+    [text]="message.summary"
+></p-message>
+
+<form
+    #dtf="ngForm"
+    (ngSubmit)="saveEntity()"
+    class="grid grid-cols-2 gap-4 p-4"
+>
+    <!-- Matricule -->
+    <div class="col-span-2 md:col-span-1">
+        <label for="matricule"
+            >Matricule <span class="text-red-500">*</span></label
+        >
+        <input
+            id="matricule"
+            name="matricule"
+            [(ngModel)]="fonctionnaire.matricule"
+            [required]="true"
+            pInputText
+            class="w-full"
+        />
+        <small
+            class="text-red-500"
+            *ngIf="dtf.submitted && !fonctionnaire.matricule"
+            >Matricule requis</small
+        >
+    </div>
+
+    <!-- Nom -->
+    <div>
+        <label for="nom">Nom <span class="text-red-500">*</span></label>
+        <input
+            id="nom"
+            name="nom"
+            [(ngModel)]="fonctionnaire.nom"
+            required
+            pInputText
+            class="w-full"
+        />
+        <small class="text-red-500" *ngIf="dtf.submitted && !fonctionnaire.nom"
+            >Nom requis</small
+        >
+    </div>
+
+    <!-- Prénom -->
+    <div>
+        <label for="prenom">Prénom <span class="text-red-500">*</span></label>
+        <input
+            id="prenom"
+            name="prenom"
+            [(ngModel)]="fonctionnaire.prenom"
+            required
+            pInputText
+            class="w-full"
+        />
+        <small
+            class="text-red-500"
+            *ngIf="dtf.submitted && !fonctionnaire.prenom"
+            >Prénom requis</small
+        >
+    </div>
+
+    <!-- Nom JF -->
+    <div>
+        <label for="nomJF">Nom de jeune fille</label>
+        <input
+            id="nomJF"
+            name="nomJF"
+            [(ngModel)]="fonctionnaire.nomJF"
+            pInputText
+            class="w-full"
+        />
+    </div>
+
+    <!-- Fonction -->
+    <div class="col-4 md:col-4">
+        <label for="profil">Fonction :</label>
+        <div>
+            <p-dropdown
+                autoWidth="false"
+                styleClass="mb-3"
+                [style]="{ width: '100%' }"
+                [options]="fonctions"
+                [(ngModel)]="fonctionnaire.fonction"
+                optionLabel="libelle"
+                inputId="fonction"
+                name="fonction"
+                placeholder="Selectionner la fonction..."
+                [filter]="true"
+                appendTo="body"
+                [showClear]="true"
+            >
+            </p-dropdown>
+        </div>
+    </div>
+    <!-- Emploi -->
+    <div class="col-4 md:col-4">
+        <label for="profil">Emploi :</label>
+        <div>
+            <p-dropdown
+                autoWidth="false"
+                styleClass="mb-3"
+                [style]="{ width: '100%' }"
+                [options]="emplois"
+                [(ngModel)]="fonctionnaire.emploi"
+                optionLabel="libelle"
+                inputId="emploi"
+                name="emploi"
+                placeholder="Selectionner l'emploi..."
+                [filter]="true"
+                appendTo="body"
+                [showClear]="true"
+            >
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="col-4 md:col-4">
+        <label for="ministere">Ministere rattaché:</label>
+        <div>
+            <p-dropdown
+                autoWidth="false"
+                styleClass="mb-3"
+                [style]="{ width: '100%' }"
+                [options]="ministeres"
+                [(ngModel)]="fonctionnaire.structure"
+                optionLabel="libelle"
+                inputId="ministere"
+                name="ministere"
+                placeholder="Selectionner le ministere..."
+                [filter]="true"
+                appendTo="body"
+                [showClear]="true"
+            >
+            </p-dropdown>
+        </div>
+    </div>
+
+    <div class="col-4 md:col-4">
+        <label for="ministere">Structure rattachée :</label>
+        <div>
+            <p-dropdown
+                autoWidth="false"
+                styleClass="mb-3"
+                [style]="{ width: '100%' }"
+                [options]="structures"
+                [(ngModel)]="fonctionnaire.structure"
+                optionLabel="libelle"
+                inputId="structure"
+                name="structure"
+                placeholder="Selectionner la structure..."
+                [filter]="true"
+                appendTo="body"
+                [showClear]="true"
+            >
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="col-4 md:col-4">
+        <label for="ministere">Supérieur hiérachique :</label>
+        <div>
+            <p-dropdown
+                autoWidth="false"
+                styleClass="mb-3"
+                [style]="{ width: '100%' }"
+                [options]="agents"
+                [(ngModel)]="fonctionnaire.superieurHierarchique"
+                optionLabel="nom"
+                inputId="superieurHierarchique"
+                name="superieurHierarchique"
+                placeholder="Selectionner le supérieur hiérachique..."
+                [filter]="true"
+                appendTo="body"
+                [showClear]="true"
+            >
+            </p-dropdown>
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div>
+        <label for="email">Email <span class="text-red-500">*</span></label>
+        <input
+            id="email"
+            name="email"
+            [(ngModel)]="fonctionnaire.email"
+            required
+            email
+            pInputText
+            class="w-full"
+        />
+        <small
+            class="text-red-500"
+            *ngIf="dtf.submitted && !fonctionnaire.email"
+            >Email requis</small
+        >
+    </div>
+
+    <!-- Sexe -->
+    <div>
+        <label for="sexe">Sexe</label>
+        <p-dropdown
+            [options]="listeSexes"
+            [(ngModel)]="fonctionnaire.sexe"
+            name="sexe"
+            optionLabel="lib"
+            optionValue="code"
+            placeholder="Sélectionner le sexe"
+            class="w-full"
+        >
+        </p-dropdown>
+    </div>
+
+    <!-- Date de naissance -->
+    <div>
+        <label for="dateNaissance">Date de naissance</label>
+        <input
+            type="date"
+            id="dateNaissance"
+            name="dateNaissance"
+            [(ngModel)]="fonctionnaire.dateNaissance"
+            dateFormat="dd/mm/yy"
+            class="w-full form-control"
+        />
+    </div>
+
+    <!-- Téléphone -->
+    <div>
+        <label for="telephone"
+            >Téléphone <span class="text-red-500">*</span></label
+        >
+        <p-inputMask
+            id="telephone"
+            name="telephone"
+            [(ngModel)]="fonctionnaire.telephone"
+            mask="(+226) 99999999"
+            [required]="true"
+            class="w-full"
+        ></p-inputMask>
+        <small
+            class="text-red-500"
+            *ngIf="dtf.submitted && !fonctionnaire.telephone"
+            >Téléphone requis</small
+        >
+    </div>
+
+    <!-- Lieu de naissance -->
+    <div>
+        <label for="lieuNaissance">Lieu de naissance</label>
+        <input
+            id="lieuNaissance"
+            name="lieuNaissance"
+            [(ngModel)]="fonctionnaire.lieuNaissance"
+            pInputText
+            class="w-full"
+        />
+    </div>
+
+    <!-- Date de recrutement -->
+    <div>
+        <label for="dateRecrutement">Date de recrutement</label>
+        <input
+            type="date"
+            id="dateRecrutement"
+            name="dateRecrutement"
+            [(ngModel)]="fonctionnaire.dateRecrutement"
+            dateFormat="dd/mm/yy"
+            class="w-full form-control"
+        />
+    </div>
+
+    <!-- CNIB -->
+    <div>
+        <label for="noCNIB">Numéro CNIB</label>
+        <input
+            id="noCNIB"
+            name="noCNIB"
+            [(ngModel)]="fonctionnaire.noCNIB"
+            pInputText
+            class="w-full"
+        />
+    </div>
+
+    <!-- NIP -->
+    <div>
+        <label for="nip">NIP</label>
+        <input
+            id="nip"
+            name="nip"
+            [(ngModel)]="fonctionnaire.nip"
+            pInputText
+            class="w-full"
+        />
+    </div>
+
+    <!-- Position -->
+    <div>
+        <label for="position">Position</label>
+        <input
+            id="position"
+            type="number"
+            name="position"
+            [(ngModel)]="fonctionnaire.position"
+            pInputText
+            class="w-full"
+        />
+    </div>
+
+    <!-- Boutons -->
+    <div class="col-span-2 flex justify-end gap-3 mt-4">
+        <button
+            type="button"
+            label="Annuler"
+            class="p-button-outlined p-button-secondary"
+            pButton
+            (click)="clear()"
+        ></button>
+        <button
+            type="submit"
+            [disabled]="!dtf.form.valid"
+            label="{{ isEditing() ? 'Enregistrer' : 'Ajouter' }}"
+            class="p-button-primary"
+            pButton
+        ></button>
+    </div>
+</form>

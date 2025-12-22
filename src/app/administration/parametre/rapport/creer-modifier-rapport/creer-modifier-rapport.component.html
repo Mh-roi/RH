@@ -1,0 +1,121 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+
+<ng-template pTemplate="header" style="
+    background-color:#1e88e0;
+    padding: 5px 10px;">
+    <i class="{{isEditing() ? 'pi-pencil' : 'pi-plus'}} pi p-mr-1 mr-2"></i>
+    <h3 class="mr-auto">
+        {{rapport.id ? 'Formulaire de modification' : 'Formulaire d\'ajout de'}} rapport
+    </h3>
+</ng-template>
+
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary"></p-message>
+
+<form (ngSubmit)="saveEntity()" #dtf="ngForm" style="margin-top:20px;">
+
+  <div class="formgrid grid">
+
+    <!-- Type de rapport -->
+    <div class="col-12 md:col-12">
+      <label for="typeRapport">Type de rapport :</label>
+      <div>
+        <p-dropdown 
+          autoWidth="false" 
+          styleClass="mb-3" 
+          [style]="{'width':'100%'}" 
+          [options]="rapportTypes"
+          [(ngModel)]="rapport.typerapport" 
+          optionLabel="libelle" 
+          inputId="typeRapport" 
+          name="typeRapport"
+          placeholder="Sélectionner le type de rapport..." 
+          [filter]="true" appendTo="body" 
+          [showClear]="true">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <!-- Periode -->
+    <div class="col-12 md:col-12">
+      <label for="periode">Période :</label>
+      <div>
+        <p-dropdown 
+          autoWidth="false" 
+          styleClass="mb-3" 
+          [style]="{'width':'100%'}" 
+          [options]="periodes"
+          [(ngModel)]="rapport.periode" 
+          optionLabel="libelle" 
+          inputId="periode" 
+          name="periode"
+          placeholder="Sélectionner la période..." 
+          [filter]="true" appendTo="body" 
+          [showClear]="true">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <!-- Mesures prises -->
+    <div class="col-12 md:col-12">
+      <label for="mesurePrises">Mesures prises :</label>
+      <textarea 
+        id="mesurePrises" 
+        name="mesurePrises" 
+        [(ngModel)]="rapport.mesurePrises"
+        rows="3"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full">
+      </textarea>
+    </div>
+
+    <!-- Difficulté -->
+    <div class="col-12 md:col-12">
+      <label for="difficulte">Difficulté :</label>
+      <textarea 
+        id="difficulte" 
+        name="difficulte" 
+        [(ngModel)]="rapport.difficulte"
+        rows="3"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full">
+      </textarea>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="col-12 md:col-12">
+      <label for="recommendations">Recommandations :</label>
+      <textarea 
+        id="recommendations" 
+        name="recommendations" 
+        [(ngModel)]="rapport.recommendations"
+        rows="3"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full">
+      </textarea>
+    </div>
+
+    <!-- Conclusion -->
+    <div class="col-12 md:col-12">
+      <label for="conclusion">Conclusion :</label>
+      <textarea 
+        id="conclusion" 
+        name="conclusion" 
+        [(ngModel)]="rapport.conclusion"
+        rows="3"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round w-full">
+      </textarea>
+    </div>
+
+  </div>
+
+  <!-- Buttons -->
+  <div class="p-ml-auto text-right">
+    <button type="reset" class="p-button-filter mr-3 float-left" pButton icon="pi pi-trash">Effacer</button>
+    <button type="button" (click)="clear()" class="p-button-filter mr-3" pButton icon="pi pi-times">Annuler</button>
+    <button type="submit" [disabled]="!dtf.form.valid" 
+      class="{{isEditing() ? 'p-button-primary' : 'p-button-success'}}" 
+      pButton icon="pi {{isEditing() ? 'pi-save' : 'pi-plus'}}">
+      {{isEditing() ? 'Enregistrer' : 'Ajouter'}}
+    </button>
+  </div>
+
+</form>

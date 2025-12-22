@@ -1,0 +1,1 @@
+/* Contient les constantes qui sont pas des listes */

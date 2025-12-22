@@ -1,0 +1,129 @@
+[
+  {
+    "id": 1,
+    "matricule": "AG001",
+    "nom": "Kaboré",
+    "prenom": "Issa",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 2,
+    "matricule": "AG002",
+    "nom": "Ouédraogo",
+    "prenom": "Awa",
+    "profil": { "id": 102, "libelle": "Chef de service" }
+  },
+  {
+    "id": 3,
+    "matricule": "AG003",
+    "nom": "Zongo",
+    "prenom": "Benoit",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 4,
+    "matricule": "AG004",
+    "nom": "Sawadogo",
+    "prenom": "Fatou",
+    "profil": { "id": 103, "libelle": "DRH" }
+  },
+  {
+    "id": 5,
+    "matricule": "AG005",
+    "nom": "Traoré",
+    "prenom": "Moussa",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 6,
+    "matricule": "AG006",
+    "nom": "Bationo",
+    "prenom": "Salimata",
+    "profil": { "id": 102, "libelle": "Chef de service" }
+  },
+  {
+    "id": 7,
+    "matricule": "AG007",
+    "nom": "Kaboré",
+    "prenom": "Yacouba",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 8,
+    "matricule": "AG008",
+    "nom": "Ouédraogo",
+    "prenom": "Mariam",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 9,
+    "matricule": "AG009",
+    "nom": "Zongo",
+    "prenom": "Abdoulaye",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 10,
+    "matricule": "AG010",
+    "nom": "Sawadogo",
+    "prenom": "Aminata",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 11,
+    "matricule": "AG011",
+    "nom": "Bationo",
+    "prenom": "Oumar",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 12,
+    "matricule": "AG012",
+    "nom": "Kaboré",
+    "prenom": "Fatimata",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 13,
+    "matricule": "AG013",
+    "nom": "Ouédraogo",
+    "prenom": "Souleymane",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 14,
+    "matricule": "AG014",
+    "nom": "Zongo",
+    "prenom": "Aïssata",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 15,
+    "matricule": "AG015",
+    "nom": "Sawadogo",
+    "prenom": "Adama",
+    "profil": { "id": 101, "libelle": "Agent" }
+  },
+  {
+    "id": 1,
+    "matricule": "drh",
+    "nom": "Kaboré",
+    "prenom": "Issa",
+    "profil": {
+        "id": 101,
+        "libelle": "Agent"
+    }
+},
+{
+    "id": 2,
+    "matricule": "386179",
+    "nom": "Ouedraogo",
+    "prenom": "Awa",
+    "profil": {
+        "id": 102,
+        "libelle": "Agent"
+    }
+}
+]
+    
+
