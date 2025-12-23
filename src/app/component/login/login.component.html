@@ -1,0 +1,28 @@
+<div class="px-8 py-24">
+  <div class="text-center text-3xl text-gray-800 capitalize">
+    Bienvenue {{ username }}
+  </div>
+  <div class="py-12 px-32 space-y-4">
+    <div class="flex flex-col gap-2 w-1/2 mx-auto">
+      <label for="username" class="text-xs text-gray-600 font-bold">Nom d'utilisateur</label>
+      <input type="text" [(ngModel)]="username" name="username" id="username" class="p-3 text-sm/7 text-gray-700 border rounded-lg border-gray-400 font-bold capitalize">
+    </div>
+    <div class="flex flex-col gap-2 w-1/2 mx-auto">
+      <label for="password" class="text-xs text-gray-600 font-bold">Mot de passe</label>
+      <input type="password" [(ngModel)]="password" name="password" id="password" class="p-3 text-sm/7 text-gray-700 border rounded-lg border-gray-400 font-bold">
+    </div>
+    <div class="w-1/2 mx-auto">
+        <button class="text-md text-white bg-green-700 px-3 py-2 border border-transparent rounded-md cursor-pointer"
+                (click)="login()">
+            Se connecter
+        </button>
+    </div>
+    <div class="w-1/2 mx-auto p-0">
+        <p class="text-xs text-gray-800">Mot de passe oublié ? cliquer 
+            <span class="text-red-700 font-bold text-lg" (click)="passwordForgot()">
+                ICI
+            </span>
+        </p>
+    </div>
+  </div>
+</div>
