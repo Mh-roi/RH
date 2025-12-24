@@ -26,7 +26,9 @@ const routes: Routes = [
   { path: 'emploi', data: {breadcrumb: 'Gestion des emplois'}, loadChildren: () => import('./parametre/emploi/emploi.module').then(m => m.EmploiModule) },
   
   { path: 'indicateur', data: {breadcrumb: 'Gestion des indicateurs'}, loadChildren: () => import('./parametre/indicateur/indicateur.module').then(m => m.IndicateurModule) },
+  { path: 'domaine', data: {breadcrumb: 'Gestion des domaines'}, loadChildren: () => import('./parametre/domaine/domaine.module').then(m => m.DomaineModule) },
 
+  { path: 'objectif', data: {breadcrumb: 'Gestion des objectifs'}, loadChildren: () => import('./parametre/objectif/objectif.module').then(m => m.ObjectifModule) },
 
   { path: '**', redirectTo: '/notfound' }
 ];

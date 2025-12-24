@@ -1,3 +1,5 @@
+import { Objectif } from "./objectif";
+
 export interface IIndicateur {
     id?: number;
     code?:string;
@@ -6,6 +8,8 @@ export interface IIndicateur {
     norme?:string;
     definition?:string;
     methodeCalcul?:string;
+    objectif?:  Objectif;
+    objectifId?: number
 }
 
 export class Indicateur implements IIndicateur{
@@ -16,7 +20,9 @@ export class Indicateur implements IIndicateur{
         public seuil?: string,
         public norme ?:string,
         public  definition?:string,
-        public    methodeCalcul?:string
+        public    methodeCalcul?:string,
+        public objectif?:  Objectif,
+        public  objectifId?: number
        
     ){}
 }

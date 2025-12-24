@@ -51,7 +51,11 @@ export class AppMenuComponent implements OnInit {
                                 { label: 'Critère', icon: 'pi pi-fw pi-sliders-h', routerLink: ['/admin/critere'] },
                                 { label: 'Période', icon: 'pi pi-fw pi-calendar', routerLink: ['/admin/periode'] },
 
-                                 { label: 'Indicateur', icon: 'pi pi-fw pi-calendar', routerLink: ['/admin/indicateur'] }
+                                 { label: 'Indicateur', icon: 'pi pi-fw pi-calendar', routerLink: ['/admin/indicateur'] },
+                                 { label: 'Objectif', icon: 'pi pi-fw pi-calendar', routerLink: ['/admin/objectif'] },
+                                 { label: 'Domaine', icon: 'pi pi-fw pi-calendar', routerLink: ['/admin/domaine'] }
+
+
 
                             ]
                         }

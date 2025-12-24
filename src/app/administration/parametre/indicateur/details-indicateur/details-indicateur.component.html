@@ -26,7 +26,12 @@
    <div class="col-md-12 details-item">
     <span class="va-m"><span class="font-bold">methode calcul :</span> {{ indicateur.methodeCalcul }}</span>
   </div>
+   <div class="col-md-12 details-item">
+    <span class="va-m"><span class="font-bold">Objectif:</span> {{ indicateur.objectif?.libelle }}</span>
+  </div>
+
 </div>
+
 
 <div class="p-ml-auto text-right">
   <button description="reset" icon="pi pi-times" label="Fermer" (click)="clear()" class="p-button-filter mr-2" pButton></button>

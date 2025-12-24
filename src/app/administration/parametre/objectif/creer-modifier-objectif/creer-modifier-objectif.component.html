@@ -1,0 +1,77 @@
+<!-- Confirmation -->
+<app-confirmation></app-confirmation>
+
+<ng-template pTemplate="header" style="background-color:#1e88e0; padding: 12px; display: flex; align-items: center; color: #fff; border-radius: 4px 4px 0 0;">
+  <i class="{{ isEditing() ? 'pi-pencil' : 'pi-plus' }} pi p-mr-2"></i>
+  <h3 style="margin: 0; font-weight: 500; font-size: 1.2rem;">
+    {{ objectif.id ? 'Modification de l’objectif' : 'Ajout d’un objectif' }}
+  </h3>
+</ng-template>
+
+<p-progressBar *ngIf="isDialogOpInProgress" mode="indeterminate" styleClass="my-2" color="#1e88e0"></p-progressBar>
+<p-message *ngIf="message" [severity]="message.severity" [text]="message.summary" styleClass="my-2"></p-message>
+
+<!-- Formulaire -->
+<form (ngSubmit)="saveEntity()" #dtf="ngForm" class="p-fluid p-formgrid p-grid p-mt-3">
+
+  <!-- Domaine (champ en premier) -->
+  <div class="field col-12 md:col-6">
+    <label for="domaine" class="p-d-block p-mb-1">Domaine :</label>
+   <p-dropdown
+  id="domaine"
+  name="domaine"
+  [options]="domaines"
+  [(ngModel)]="objectif.domaineId"
+  optionLabel="libelle"
+  optionValue="id"
+  placeholder="Sélectionner un domaine"
+  [showClear]="true"
+  [required]="true"
+  class="w-full"
+></p-dropdown>
+
+  </div>
+
+  <!-- Libellé -->
+  <div class="field col-12 md:col-6">
+    <label for="libelle" class="p-d-block p-mb-1">Libellé :</label>
+    <input
+      type="text"
+      id="libelle"
+      name="libelle"
+      [(ngModel)]="objectif.libelle"
+      required
+      class="p-inputtext p-component w-full"
+      placeholder="Ex: Objectif stratégique"
+    />
+  </div>
+
+  <!-- Code -->
+  <div class="field col-12 md:col-6">
+    <label for="code" class="p-d-block p-mb-1">Code :</label>
+    <input
+      type="text"
+      id="code"
+      name="code"
+      [(ngModel)]="objectif.code"
+      required
+      class="p-inputtext p-component w-full"
+      placeholder="Ex: OBJ001"
+    />
+  </div>
+
+  <!-- Boutons -->
+  <div class="col-12 text-right mt-4">
+    <button type="reset" pButton label="Effacer" icon="pi pi-trash" class="p-button-secondary mr-2"></button>
+    <button type="button" (click)="clear()" pButton label="Annuler" icon="pi pi-times" class="p-button-danger mr-2"></button>
+    <button
+      type="submit"
+      [disabled]="!dtf.form.valid"
+      pButton
+      [label]="isEditing() ? 'Enregistrer' : 'Ajouter'"
+      [icon]="'pi ' + (isEditing() ? 'pi-save' : 'pi-plus')"
+      [class]="isEditing() ? 'p-button-primary' : 'p-button-success'"
+    ></button>
+  </div>
+
+</form>

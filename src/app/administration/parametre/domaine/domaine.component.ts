@@ -4,30 +4,24 @@ import { ConfirmationService, Message } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { CURRENT_PAGE, MAX_SIZE_PAGE } from 'src/app/shared/constants/pagination.constants';
-import { IIndicateur, Indicateur } from 'src/app/shared/model/indicateur';
-import { IndicateurService } from 'src/app/shared/service/indicateur.service';
+import { Domaine, IDomaine } from 'src/app/shared/model/domaine';
+import { DomaineService } from 'src/app/shared/service/domaine.service';
 import { environment } from 'src/environments/environment';
-import { CreerModifierIndicateurComponent } from './creer-modifier-indicateur/creer-modifier-indicateur.component';
-import { DetailsIndicateurComponent } from './details-indicateur/details-indicateur.component';
+import { CreerModifierDomaineComponent } from './creer-modifier-domaine/creer-modifier-domaine.component';
+import { DetailsDomaineComponent } from './details-domaine/details-domaine.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AppCommonModule } from "src/app/shared/common/app-common.module";
-import { ObjectifService } from 'src/app/shared/service/objectif.service';
-import { IObjectif } from 'src/app/shared/model/objectif';
 
 @Component({
-  selector: 'app-indicateur',
-  templateUrl: './indicateur.component.html',
-  styleUrls: ['./indicateur.component.scss'],
- // imports: [AppCommonModule]
+  selector: 'app-domaine',
+  templateUrl: './domaine.component.html',
+  styleUrls: ['./domaine.component.scss']
 })
-export class IndicateurComponent implements OnInit, OnDestroy {
-
+export class DomaineComponent implements OnInit, OnDestroy {
 
   routeData: Subscription | undefined;
   FonctionListSubscription: Subscription | undefined;
-  indicateurs: IIndicateur[] = [];
-  objectifs: IObjectif[]=[];
-  indicateur: IIndicateur = new Indicateur();
+  indicateurs: IDomaine[] = [];
+  domaine: IDomaine = new Domaine();
   timeoutHandle: any;
   totalRecords: number = 0;
   recordsPerPage = environment.recordsPerPage;
@@ -60,8 +54,7 @@ export class IndicateurComponent implements OnInit, OnDestroy {
       }
 
        constructor(
-          private indicateurService: IndicateurService,
-           private objectifService: ObjectifService,
+          private domaineService: DomaineService,
           private activatedRoute: ActivatedRoute,
           private dialogService: DialogService,
           private dialogRef: DynamicDialogRef,
@@ -112,7 +105,7 @@ export class IndicateurComponent implements OnInit, OnDestroy {
       
             loadAll(): void {
               const req = this.buildReq();
-              this.indicateurService.query(req).subscribe(result => {
+              this.domaineService.query(req).subscribe(result => {
                 if (result && result.body) {
                   this.totalRecords = Number(result.headers.get('X-Total-Count'));
                   this.indicateurs = result.body || [];
@@ -120,15 +113,6 @@ export class IndicateurComponent implements OnInit, OnDestroy {
               });
             }
             
-             loadObjectif(): void {
-              const req = this.buildReq();
-              this.indicateurService.findAll().subscribe(result => {
-                if (result && result.body) {
-                  this.totalRecords = Number(result.headers.get('X-Total-Count'));
-                  this.objectifs= result.body || [];
-                }
-              });
-            }
               
             sortMethod(): string[] {
               this.predicate = 'id';
@@ -155,9 +139,9 @@ export class IndicateurComponent implements OnInit, OnDestroy {
       
             /** Permet d'afficher un modal pour l'ajout */
             openModalCreate(): void {
-              this.dialogService.open(CreerModifierIndicateurComponent,
+              this.dialogService.open(CreerModifierDomaineComponent,
                 {
-                  header: 'Ajouter un indicateur',
+                  header: 'Ajouter un domaine',
                   width: '60%',
                   contentStyle: { overflow: 'auto', },
                   baseZIndex: 10000,
@@ -174,16 +158,16 @@ export class IndicateurComponent implements OnInit, OnDestroy {
             }
       
             /** Permet d'afficher un modal pour la modification */
-            openModalEdit(indicateur: IIndicateur): void {
-              this.dialogService.open(CreerModifierIndicateurComponent,
+            openModalEdit(domaine: IDomaine): void {
+              this.dialogService.open(CreerModifierDomaineComponent,
                 {
-                  header: 'Modifier un indicateur',
+                  header: 'Modifier un domaine',
                   width: '60%',
                   contentStyle: { overflow: 'auto' },
                   baseZIndex: 10000,
                   maximizable: true,
                   closable: true,
-                  data: indicateur
+                  data: domaine
                 }).onClose.subscribe(result => {
                   if(result){
                     this.isDialogOpInProgress = false;
@@ -196,33 +180,33 @@ export class IndicateurComponent implements OnInit, OnDestroy {
             }
       
             /** Permet d'afficher un modal pour voir les détails */
-            openModalDetail(indicateur:IIndicateur): void {
-              this.dialogService.open(DetailsIndicateurComponent,
+            openModalDetail(domaine:IDomaine): void {
+              this.dialogService.open(DetailsDomaineComponent,
                 {
-                  header: 'Details  indicateur',
+                  header: 'Details  domaine',
                   width: '60%',
                   contentStyle: { overflow: 'auto' },
                   baseZIndex: 10000,
                   maximizable: true,
-                  data: indicateur
+                  data: domaine
                 });
             }
       
       
             // Suppression
-            onDelete(indicateur: IIndicateur) {
+            onDelete(domaine: IDomaine) {
               this.confirmationService.confirm({
-                message: 'Etes-vous sur de vouloir supprimer cet indicateur?',
+                message: 'Etes-vous sur de vouloir supprimer cet domaine?',
                 accept: () => {
-                  this.delete(indicateur);
+                  this.delete(domaine);
                 }
               });
             }
       
             delete(selection: any) {
               this.isOpInProgress = true;
-              this.indicateurService.delete(selection.id).subscribe(() => {
-                this.indicateurs = this.indicateurs.filter(indicateur => indicateur.id !== selection.id);
+              this.domaineService.delete(selection.id).subscribe(() => {
+                this.indicateurs = this.indicateurs.filter(domaine => domaine.id !== selection.id);
                 selection = null;
                 this.isOpInProgress = false;
                 this.totalRecords--;

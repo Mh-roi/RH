@@ -4,24 +4,24 @@ import { NgForm } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, Message } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IIndicateur, Indicateur } from 'src/app/shared/model/indicateur';
-import { IObjectif } from 'src/app/shared/model/objectif';
-import { IndicateurService } from 'src/app/shared/service/indicateur.service';
+import { IDomaine } from 'src/app/shared/model/domaine';
+import { IObjectif, Objectif } from 'src/app/shared/model/objectif';
+import { DomaineService } from 'src/app/shared/service/domaine.service';
 import { ObjectifService } from 'src/app/shared/service/objectif.service';
 
 @Component({
-  selector: 'app-creer-modifier-Indicateur',
-  templateUrl: './creer-modifier-Indicateur.component.html',
-  styleUrls: ['./creer-modifier-Indicateur.component.scss']
+  selector: 'app-creer-modifier-objectif',
+  templateUrl: './creer-modifier-objectif.component.html',
+  styleUrls: ['./creer-modifier-objectif.component.scss']
 })
-export class CreerModifierIndicateurComponent {
+export class CreerModifierObjectifComponent {
 
 
    @ViewChild('dtf') form!: NgForm;
-    indicateur: IIndicateur = new Indicateur();
-    @Input() data: IIndicateur = new Indicateur();
-    indicateurs: IIndicateur[]=[];
-    objectifs: IObjectif []=[];
+    objectif: IObjectif = new Objectif();
+    @Input() data: IObjectif = new Objectif();
+    objectifs: IObjectif[]=[];
+    domaines: IDomaine[] = [];
    // parents: ICategorie[]=[];
     error: string | undefined;
     showDialog = false;
@@ -32,52 +32,49 @@ export class CreerModifierIndicateurComponent {
     isOpInProgress!: boolean;
   
     constructor(
-      private indicateurService: IndicateurService,
       private objectifService: ObjectifService,
+      private domaineService: DomaineService,
       private dialogRef: DynamicDialogRef,
       private dynamicDialog: DynamicDialogConfig,
       private confirmationService: ConfirmationService
     ) { }
   
-    ngOnInit(): void {
-  
-      if (this.dynamicDialog.data) {
-        this.indicateur = cloneDeep(this.dynamicDialog.data);
-         this.indicateur.objectifId = this.indicateur.objectif?.id;
-      }
-      this.loadObjectifs();
-  
-    }
-  
-  /*  loadMinistere(event?: LazyLoadEvent) {
-      this.ministereService.findAll().subscribe(response => {
-        this.parents = response.body!;
-      }, error => {
-        this.message = { severity: 'error', summary: error.error };
-        console.error(JSON.stringify(error));
-      });
-    }*/
+   ngOnInit(): void {
+  if (this.dynamicDialog.data) {
+    this.objectif = cloneDeep(this.dynamicDialog.data);
+    // Préremplir domaineId pour le dropdown
+    this.objectif.domaineId = this.objectif.domaine?.id;
+  }
+
+  this.loadDomaines();
+}
+
+
+loadDomaines(): void {
+  this.domaineService.findAll().subscribe({
+    next: (response) => {
+      this.domaines = response.body || [];
+
+                console.log("Domaine a recupéré:", this.objectif.domaine);
 
       
-      loadObjectifs(): void {
-        console.log("===========================LOADOBJECT==================")
-    this.objectifService.findAll().subscribe({
-      next: (response) => {
-        this.objectifs = response.body || [];
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error('Erreur chargement domaines:', error);
-        this.showMessage({ severity: 'error', summary: 'Impossible de charger les domaines' });
-      }
-    });
-  }
+
+    },
+    error: (error: HttpErrorResponse) => {
+      console.error('Erreur chargement domaines:', error);
+      this.showMessage({ severity: 'error', summary: 'Impossible de charger les domaines' });
+    }
+  });
+}
+
+
     clear(): void {
       this.form.resetForm();
       this.dialogRef.close();
       this.dialogRef.destroy();
     }
     isEditing() {
-      return !!this.indicateur.id;
+      return !!this.objectif.id;
     }
   
     clearDialogMessages() {
@@ -96,24 +93,23 @@ export class CreerModifierIndicateurComponent {
         this.message = null;
       }, 5000);
     }
-   saveEntity(): void {
-    
+    saveEntity(): void {
   this.clearDialogMessages();
   this.isDialogOpInProgress = true;
 
-  if (this.indicateur) {
-    // Reconstruire l'objet objectif à partir de objectifId
-    if (this.indicateur.objectifId) {
-      this.indicateur.objectif = this.objectifs.find(o => o.id === this.indicateur.objectifId);
+  if (this.objectif) {
+    // Reconstruire l'objet domaine à partir de domaineId
+    if (this.objectif.domaineId) {
+      this.objectif.domaine = this.domaines.find(d => d.id === this.objectif.domaineId);
     }
 
-    if (this.indicateur.id) {
+    if (this.objectif.id) {
       // Modification
-      this.indicateurService.update(this.indicateur).subscribe({
+      this.objectifService.update(this.objectif).subscribe({
         next: (response) => {
           this.dialogRef.close(response);
           this.dialogRef.destroy();
-          this.showMessage({ severity: 'success', summary: 'Indicateur modifié avec succès' });
+          this.showMessage({ severity: 'success', summary: 'Objectif modifié avec succès' });
         },
         error: (error) => {
           console.error("error" + JSON.stringify(error));
@@ -123,11 +119,11 @@ export class CreerModifierIndicateurComponent {
       });
     } else {
       // Création
-      this.indicateurService.create(this.indicateur).subscribe({
+      this.objectifService.create(this.objectif).subscribe({
         next: (response) => {
           this.dialogRef.close(response);
           this.dialogRef.destroy();
-          this.showMessage({ severity: 'success', summary: 'Indicateur créé avec succès' });
+          this.showMessage({ severity: 'success', summary: 'Objectif créé avec succès' });
         },
         error: (error) => {
           console.error("error" + JSON.stringify(error));

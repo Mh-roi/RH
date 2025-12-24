@@ -4,30 +4,24 @@ import { ConfirmationService, Message } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { CURRENT_PAGE, MAX_SIZE_PAGE } from 'src/app/shared/constants/pagination.constants';
-import { IIndicateur, Indicateur } from 'src/app/shared/model/indicateur';
-import { IndicateurService } from 'src/app/shared/service/indicateur.service';
-import { environment } from 'src/environments/environment';
-import { CreerModifierIndicateurComponent } from './creer-modifier-indicateur/creer-modifier-indicateur.component';
-import { DetailsIndicateurComponent } from './details-indicateur/details-indicateur.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AppCommonModule } from "src/app/shared/common/app-common.module";
+import { IObjectif, Objectif } from 'src/app/shared/model/objectif';
 import { ObjectifService } from 'src/app/shared/service/objectif.service';
-import { IObjectif } from 'src/app/shared/model/objectif';
+import { environment } from 'src/environments/environment';
+import { CreerModifierObjectifComponent } from './creer-modifier-objectif/creer-modifier-objectif.component';
+import { DetailsObjectifComponent } from './details-objectif/details-objectif.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-indicateur',
-  templateUrl: './indicateur.component.html',
-  styleUrls: ['./indicateur.component.scss'],
- // imports: [AppCommonModule]
+  selector: 'app-objectif',
+  templateUrl: './objectif.component.html',
+  styleUrls: ['./objectif.component.scss']
 })
-export class IndicateurComponent implements OnInit, OnDestroy {
-
+export class ObjectifComponent implements OnInit, OnDestroy {
 
   routeData: Subscription | undefined;
   FonctionListSubscription: Subscription | undefined;
-  indicateurs: IIndicateur[] = [];
-  objectifs: IObjectif[]=[];
-  indicateur: IIndicateur = new Indicateur();
+  objectifs: IObjectif[] = [];
+  objectif: IObjectif = new Objectif();
   timeoutHandle: any;
   totalRecords: number = 0;
   recordsPerPage = environment.recordsPerPage;
@@ -60,8 +54,7 @@ export class IndicateurComponent implements OnInit, OnDestroy {
       }
 
        constructor(
-          private indicateurService: IndicateurService,
-           private objectifService: ObjectifService,
+          private objectifService: ObjectifService,
           private activatedRoute: ActivatedRoute,
           private dialogService: DialogService,
           private dialogRef: DynamicDialogRef,
@@ -112,23 +105,14 @@ export class IndicateurComponent implements OnInit, OnDestroy {
       
             loadAll(): void {
               const req = this.buildReq();
-              this.indicateurService.query(req).subscribe(result => {
+              this.objectifService.query(req).subscribe(result => {
                 if (result && result.body) {
                   this.totalRecords = Number(result.headers.get('X-Total-Count'));
-                  this.indicateurs = result.body || [];
+                  this.objectifs = result.body || [];
                 }
               });
             }
             
-             loadObjectif(): void {
-              const req = this.buildReq();
-              this.indicateurService.findAll().subscribe(result => {
-                if (result && result.body) {
-                  this.totalRecords = Number(result.headers.get('X-Total-Count'));
-                  this.objectifs= result.body || [];
-                }
-              });
-            }
               
             sortMethod(): string[] {
               this.predicate = 'id';
@@ -155,9 +139,9 @@ export class IndicateurComponent implements OnInit, OnDestroy {
       
             /** Permet d'afficher un modal pour l'ajout */
             openModalCreate(): void {
-              this.dialogService.open(CreerModifierIndicateurComponent,
+              this.dialogService.open(CreerModifierObjectifComponent,
                 {
-                  header: 'Ajouter un indicateur',
+                  header: 'Ajouter un objectif',
                   width: '60%',
                   contentStyle: { overflow: 'auto', },
                   baseZIndex: 10000,
@@ -166,7 +150,7 @@ export class IndicateurComponent implements OnInit, OnDestroy {
                 }
               ).onClose.subscribe(result => {
                 if(result) {
-                this.indicateurs.push(result.body);
+                this.objectifs.push(result.body);
                 this.isDialogOpInProgress = false;
                 this.showMessage({ severity: 'success', summary: 'Fonction creer avec succès' });
                 }
@@ -174,16 +158,16 @@ export class IndicateurComponent implements OnInit, OnDestroy {
             }
       
             /** Permet d'afficher un modal pour la modification */
-            openModalEdit(indicateur: IIndicateur): void {
-              this.dialogService.open(CreerModifierIndicateurComponent,
+            openModalEdit(objectif: IObjectif): void {
+              this.dialogService.open(CreerModifierObjectifComponent,
                 {
-                  header: 'Modifier un indicateur',
+                  header: 'Modifier un objectif',
                   width: '60%',
                   contentStyle: { overflow: 'auto' },
                   baseZIndex: 10000,
                   maximizable: true,
                   closable: true,
-                  data: indicateur
+                  data: objectif
                 }).onClose.subscribe(result => {
                   if(result){
                     this.isDialogOpInProgress = false;
@@ -196,33 +180,33 @@ export class IndicateurComponent implements OnInit, OnDestroy {
             }
       
             /** Permet d'afficher un modal pour voir les détails */
-            openModalDetail(indicateur:IIndicateur): void {
-              this.dialogService.open(DetailsIndicateurComponent,
+            openModalDetail(objectif:IObjectif): void {
+              this.dialogService.open(DetailsObjectifComponent,
                 {
-                  header: 'Details  indicateur',
+                  header: 'Details  objectif',
                   width: '60%',
                   contentStyle: { overflow: 'auto' },
                   baseZIndex: 10000,
                   maximizable: true,
-                  data: indicateur
+                  data: objectif
                 });
             }
       
       
             // Suppression
-            onDelete(indicateur: IIndicateur) {
+            onDelete(objectif: IObjectif) {
               this.confirmationService.confirm({
-                message: 'Etes-vous sur de vouloir supprimer cet indicateur?',
+                message: 'Etes-vous sur de vouloir supprimer cet objectif?',
                 accept: () => {
-                  this.delete(indicateur);
+                  this.delete(objectif);
                 }
               });
             }
       
             delete(selection: any) {
               this.isOpInProgress = true;
-              this.indicateurService.delete(selection.id).subscribe(() => {
-                this.indicateurs = this.indicateurs.filter(indicateur => indicateur.id !== selection.id);
+              this.objectifService.delete(selection.id).subscribe(() => {
+                this.objectifs = this.objectifs.filter(objectif => objectif.id !== selection.id);
                 selection = null;
                 this.isOpInProgress = false;
                 this.totalRecords--;

@@ -8,7 +8,7 @@ const commonAuth: string = 'http://localhost:8080/api/auth';
 export const domaineUrl = 'http://localhost:4200';
 // export const domaineUrl="http://localhost:4200";
 //export const baseUrl = 'http://10.65.12.78:8080/api';
-export const baseUrl = 'http://10.65.12.129:8080/api/dashboard';
+export const baseUrl = 'http://localhost:8080/api/dashboard';
 // export const baseUrl="http://localhost:8080/evaluation/api";
 // export const baseUrl="http://192.168.0.102:8080/evaluation/api";
 export const environment = {
@@ -93,5 +93,7 @@ export const environment = {
     rapportResource: `${baseUrl}/rapport`,
 
     indicateurResource: `${baseUrl}/indicateurs`,
+    domaineResource: `${baseUrl}/domaines`,
+    objectifResource: `${baseUrl}/objectifs`
     //recordsPerPage: 10,
 };

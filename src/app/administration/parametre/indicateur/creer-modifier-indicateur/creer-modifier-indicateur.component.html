@@ -14,7 +14,22 @@
 <!-- Formulaire -->
 <form (ngSubmit)="saveEntity()" #dtf="ngForm" style="margin-top:20px;">
   <div class="formgrid grid">
+<div class="field col-12 md:col-6">
+  <label for="objectif">Objectif :</label>
+<p-dropdown
+  id="indicateur"
+  name="indicateur"
+  [options]="objectifs"
+  [(ngModel)]="indicateur.objectifId"
+  optionLabel="libelle"
+  optionValue="id"
+  placeholder="Sélectionner un objectif"
+  [showClear]="true"
+  [required]="true"
+  class="w-full"
+></p-dropdown>
 
+</div>
     <!-- Libelle -->
     <div class="field col-12 md:col-6">
       <label for="libelle">Libellé :</label>

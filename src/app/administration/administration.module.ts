@@ -28,6 +28,10 @@ import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StructureComponent } from './parametre/structure/structure.component';
 import { EmploiComponent } from './parametre/emploi/emploi.component';
+import { DomaineComponent } from './parametre/domaine/domaine.component';
+import { CreerModifierDomaineComponent } from './parametre/domaine/creer-modifier-domaine/creer-modifier-domaine.component';
+import { DetailsDomaineComponent } from './parametre/domaine/details-domaine/details-domaine.component';
+import { ObjectifComponent } from './parametre/objectif/objectif.component';
 
 
 
@@ -42,7 +46,7 @@ import { EmploiComponent } from './parametre/emploi/emploi.component';
         DashbordComponent,
         NotesAgentsComponent,
         StructureComponent,
-        EmploiComponent,
+        EmploiComponent
     
     ],
     exports: [
