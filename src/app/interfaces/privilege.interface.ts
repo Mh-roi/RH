@@ -1,4 +1,4 @@
-export interface ProfileInterface{
+export interface PrivilegeInterface{
     id: number;
     libelle: string;
 }

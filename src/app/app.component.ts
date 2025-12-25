@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './component/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 @Component({
   selector: 'app-root',
